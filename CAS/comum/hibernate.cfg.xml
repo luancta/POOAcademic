@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+                                         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+ <session-factory name="cas">
+  <property name="hibernate.connection.driver_class">org.hsqldb.jdbcDriver</property>
+  <property name="hibernate.connection.password">123456</property>
+  <property name="hibernate.connection.url">jdbc:hsqldb:CasDB</property>
+  <property name="hibernate.connection.username">cas</property>
+  <property name="hibernate.dialect">org.hibernate.dialect.HSQLDialect</property>
+  <property name="hibernate.show_sql">true</property>
+  <property name="hibernate.connection.autocommit">true</property>
+  <property name="hbm2ddl.auto">update</property>
+  <mapping class="cas.comum.dominio.Pessoa"/>
+  <mapping class="cas.acesso.dominio.Usuario"/>
+  <mapping class="cas.ensino.dominio.Disciplina"/>
+  <mapping class="cas.ensino.dominio.Turma"/>
+  <mapping class="cas.comum.dominio.Turno"/>
+  <mapping class="cas.ensino.dominio.Docente"/>
+  <mapping class="cas.ensino.dominio.Estudante"/>
+  <mapping class="cas.ensino.dominio.Horario"/>
+  <mapping class="cas.ensino.dominio.Reserva"/>
+  <mapping class="cas.espacoFisico.dominio.Aplicativo"/>
+  <mapping class="cas.espacoFisico.dominio.Laboratorio"/>
+  <mapping class="cas.espacoFisico.dominio.Sala"/>
+  <mapping class="cas.espacoFisico.dominio.Projetor"/>
+  <mapping class="cas.espacoFisico.dominio.LocalAula"/>
+ </session-factory>
+</hibernate-configuration>
