@@ -5,7 +5,8 @@ public class Sala extends LocalAula{
 	//Identificador da sala
 	private int id;
 	
-	
+	//Numero da sala
+		private int numero;
 	
 	//Set e Get
 	public int getId() {
@@ -21,6 +22,5 @@ public class Sala extends LocalAula{
 	public void setNumero(int numero) {
 		this.numero = numero;
 	}
-	//Numero da sala
-	private int numero;
+	
 }

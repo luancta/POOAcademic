@@ -1,5 +1,6 @@
 package cas.espacoFisico.dominio;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Laboratorio extends LocalAula {
@@ -11,7 +12,7 @@ public class Laboratorio extends LocalAula {
 	private String nome;
 
 	//Lista de aplicativos instalados nas estações do laboratório
-	private List<Aplicativo> aplicativosLab;
+	private List<Aplicativo> aplicativosLab = new ArrayList <Aplicativo>();
 	
 	
 	//Set e Get
