@@ -4,11 +4,14 @@ public class Sala extends LocalAula{
 
 	//Identificador da sala
 	private int id;
+	
+	
+	
+	//Set e Get
 	public int getId() {
 		return id;
 	}
 	
-	//Set e Get
 	public void setId(int id) {
 		this.id = id;
 	}
