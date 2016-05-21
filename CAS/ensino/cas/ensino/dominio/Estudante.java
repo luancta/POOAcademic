@@ -1,11 +1,13 @@
 package cas.ensino.dominio;
 
+import cas.comum.dominio.Pessoa;
+
 public class Estudante {
 	
 	private int id;
 	private String matricula;
 	private String curso;
-	
+	private Pessoa pessoa;
 	
 	public int getId() {
 		return id;
@@ -25,6 +27,10 @@ public class Estudante {
 	public void setCurso(String curso) {
 		this.curso = curso;
 	}
-	
-
+	public Pessoa getPessoa() {
+		return pessoa;
+	}
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
+	}
 }

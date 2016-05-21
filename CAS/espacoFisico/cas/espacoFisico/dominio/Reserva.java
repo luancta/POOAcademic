@@ -1,8 +1,8 @@
-package cas.ensino.dominio;
+package cas.espacoFisico.dominio;
 
 import java.util.Date;
 
-import cas.espacoFisico.dominio.LocalAula;
+import cas.ensino.dominio.Turma;
 
 public class Reserva {
 	/** Identificador da reserva */
