@@ -1,6 +1,6 @@
 package cas.espacoFisico.dominio;
 
-public class Sala extends LocalAula{
+public class Sala{
 
 	//Identificador da sala
 	private int id;

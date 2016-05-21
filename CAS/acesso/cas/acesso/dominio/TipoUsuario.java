@@ -1,24 +1,15 @@
 package cas.acesso.dominio;
 
-public class TipoUsuario {
+public enum TipoUsuario {
 	
-	private int id;
-	private String descricao;
+	ADMINISTRADOR, COORDENADOR, SECRETARIO;
 	
-	
-	public int getId() {
-		return id;
+	public static TipoUsuario get(int i){
+		switch (i) {
+		case 0: return ADMINISTRADOR; 
+		case 1: return COORDENADOR;
+		case 2: return SECRETARIO;	
+		default:return null;
+		}
 	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public String getDescricao() {
-		return descricao;
-	}
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-	
-	
-
 }

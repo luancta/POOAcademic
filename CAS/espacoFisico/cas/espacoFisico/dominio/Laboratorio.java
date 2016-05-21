@@ -3,7 +3,7 @@ package cas.espacoFisico.dominio;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Laboratorio extends LocalAula {
+public class Laboratorio {
 
 	//Identificador
 	private int id;
