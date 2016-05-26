@@ -22,7 +22,10 @@ public class BancoUtil {
             }
             java.sql.Statement stm = conexao.createStatement();
 
-            ResultSet rs = stm.executeQuery(" CREATE TABLE comum.usuario\n");
+            String sql = "CREATE schema comum;\n" +
+						"CREATE TABLE comum.turno ( id_turno integer not null, descricao character varying (255), CONSTRAINT pk_TurnoID PRIMARY KEY (id_turno));";
+            
+            ResultSet rs = stm.executeQuery(sql);
 
         } catch (SQLException e) {
             System.out.println("Erro de SQL: " + e);

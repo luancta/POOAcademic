@@ -1,4 +1,5 @@
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -28,12 +29,20 @@ public class Aplicacao {
 		
 		String descricao = entradaDescricao.nextLine();
 		
-		List<Turno> turnos = turnDao.findTurnobyDescricao(descricao);
+		List<Turno> turnos = new ArrayList<Turno>();
+		turnos = turnDao.findTurnobyDescricao(descricao);
 		
-		System.out.println("Os turnos encontratos foram: ");
-		for(Turno tur : turnos){
-			System.out.println(tur);
-			
+		
+		
+		if(turnos != null && !turnos.isEmpty()){
+			System.out.println("Os turnos encontratos foram: ");
+			for(Turno tur : turnos){
+				System.out.println(tur);
+			}
+			entradaDescricao.close();
+		}else{
+			System.out.println("Nenhum Registro Encontrado");
 		}
+			
 	}
 }
