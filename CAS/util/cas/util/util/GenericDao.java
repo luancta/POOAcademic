@@ -17,7 +17,7 @@ public class GenericDao {
 
     }
 
-    protected Connection getConnection() {
+    public Connection getConnection() {
         return conexao.getConexao();
     }
 

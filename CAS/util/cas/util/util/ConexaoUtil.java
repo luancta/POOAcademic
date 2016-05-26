@@ -13,16 +13,16 @@ import java.sql.SQLException;
 public class ConexaoUtil {
     Connection conexao = null;
     
-    private static final String DRIVER = "org.hsqldb.jdbcDriver";
-    private static String nomeBanco = "";
+    private static final String DRIVER = "org.hsqldb.jdbc.JDBCDriver";
+    private static String nomeBanco = "ProjetoCASDB";
     public Connection getConexao (){
         try {
-            Class.forName("org.hsqldb.jdbcDriver");
-            conexao = DriverManager.getConnection("jdbc:hsqldb:file:c:/cas/"+nomeBanco, "sa", "");
+            Class.forName(DRIVER);
+            conexao = DriverManager.getConnection("jdbc:hsqldb:file://localhost/ProjetoCASDB", "cas", "12345");
             if (conexao != null) {
                 return conexao;
             } else {
-                System.out.println("NÃ£o foi possÃ­vel conectar com o banco");
+                System.out.println("Não foi possível conectar com o banco");
                 return null;
             }
 
@@ -38,7 +38,7 @@ public class ConexaoUtil {
     
     public static Connection createDB() {
         try {
-            String URL = "jdbc:hsqldb:file:c:/cas/"+nomeBanco+";user=sa;password=;";
+            String URL = "jdbc:hsqldb:file:D:/"+nomeBanco+";user=cas;password=12345;";
             Class.forName(DRIVER);
             return DriverManager.getConnection(URL);
         } catch (ClassNotFoundException e) {
