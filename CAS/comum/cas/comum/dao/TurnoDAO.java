@@ -5,11 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import cas.comum.dominio.Turno;
-import cas.util.util.ConexaoUtil;
 import cas.util.util.GenericDao;
 
 /*

@@ -1,6 +1,5 @@
 package cas.util.util;
 
-import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -18,7 +17,7 @@ public class ConexaoUtil {
     public Connection getConexao (){
         try {
             Class.forName(DRIVER);
-            conexao = DriverManager.getConnection("jdbc:hsqldb:file:ProjectCASDBNew/"+nomeBanco, "cas", "12345");
+            conexao = DriverManager.getConnection("jdbc:hsqldb:file:c:/ProjectCASDBNew/"+nomeBanco, "cas", "12345");
             if (conexao != null) {
                 return conexao;
             } else {
@@ -38,7 +37,7 @@ public class ConexaoUtil {
     
     public static Connection createDB() {
         try {
-            String URL = "jdbc:hsqldb:file:D:/ProjectCASDBNew/"+nomeBanco+";user=cas;password=12345;";
+            String URL = "jdbc:hsqldb:file:c:/ProjectCASDBNew/"+nomeBanco+";user=cas;password=12345;";
             Class.forName(DRIVER);
             return DriverManager.getConnection(URL);
         } catch (ClassNotFoundException e) {
@@ -57,7 +56,7 @@ public class ConexaoUtil {
             }
             java.sql.Statement stm = conexao.createStatement();
 
-            ResultSet rs = stm.executeQuery(" SELECT * FROM comum.turno ");
+            ResultSet rs = stm.executeQuery(" SELECT * FROM acesso.usuario ");
             while (rs.next()) {
                int id =  rs.getInt(1);
                id++;

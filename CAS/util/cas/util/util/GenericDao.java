@@ -21,7 +21,7 @@ public class GenericDao {
         return conexao.getConexao();
     }
 
-    protected void save(String insertSql, Object... parametros) {
+    public void save(String insertSql, Object... parametros) {
         try {
             PreparedStatement pstmt = getConnection().prepareStatement(insertSql);
 
@@ -37,7 +37,7 @@ public class GenericDao {
         }
     }
 
-    protected void update(String updateSql, Object... parametros) {
+    public void update(String updateSql, Object... parametros) {
         try {
             PreparedStatement pstmt = getConnection().prepareStatement(updateSql);
 
@@ -52,7 +52,7 @@ public class GenericDao {
         }
     }
 
-    protected void delete(String deleteSql, Object... parametros) {
+    public void delete(String deleteSql, Object... parametros) {
         try {
             PreparedStatement pstmt = getConnection().prepareStatement(deleteSql);
 
