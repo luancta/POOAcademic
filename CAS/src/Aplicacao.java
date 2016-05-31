@@ -1,3 +1,6 @@
+import java.util.Scanner;
+
+import cas.acesso.controller.AutenticacaoController;
 import cas.util.util.BancoUtil;
 import cas.util.util.ConexaoUtil;
 
@@ -15,8 +18,9 @@ public class Aplicacao {
 	        bd.CriarTabelas();
         }
 		
-		try {
-
+		try {			
+			AutenticacaoController autenticacao = new AutenticacaoController();
+			autenticacao.getTelaInicialSistema();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

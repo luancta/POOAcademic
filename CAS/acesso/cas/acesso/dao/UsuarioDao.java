@@ -1,6 +1,7 @@
 package cas.acesso.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -81,5 +82,10 @@ public class UsuarioDao extends GenericDao {
 			usuario.setTipoUsuario(TipoUsuario.get( rs.getInt("tipo_usuario")) );
 			return usuario;
 		}
-
+		
+		public void cadastrarUsuario(String login, String senha, int tipoUsuario, int idPessoa){
+			UsuarioDao dao = new UsuarioDao();
+			dao.save(" INSERT INTO acesso.usuario (login, senha, tipo_usuario, id_pessoa) " +  
+			" VALUES (?,?,?,?) ", login, senha, tipoUsuario, idPessoa);
+		}
 }
