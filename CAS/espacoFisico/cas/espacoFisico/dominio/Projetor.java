@@ -8,7 +8,24 @@ public class Projetor {
 	private  Marca marca;
 
 	//Tombamento do projetor
-	private int tombo;
+	private String tombo;
+	
+	public Projetor() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Projetor(int id) {
+		this.id = id;
+	}
+
+	public Projetor(String tombo) {
+		this.tombo = tombo;
+	}
+
+	public Projetor(int id, String tombo) {
+		this.id = id;
+		this.tombo = tombo;
+	}
 
 	//Set e Get
 	public int getId() {
@@ -27,11 +44,11 @@ public class Projetor {
 		this.marca = marca;
 	}
 
-	public int getTombo() {
+	public String getTombo() {
 		return tombo;
 	}
 
-	public void setTombo(int tombo) {
+	public void setTombo(String tombo) {
 		this.tombo = tombo;
 	}
 	
