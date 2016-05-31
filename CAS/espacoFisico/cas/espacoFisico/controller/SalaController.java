@@ -1,11 +1,14 @@
 package cas.espacoFisico.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 
+import cas.acesso.controller.MenuController;
 import cas.espacoFisico.dao.SalaDao;
 import cas.espacoFisico.dominio.Sala;
+import cas.util.util.ViewConsoleUtil;
 
 /**
  * Controlador de Sala de Aula
@@ -19,18 +22,20 @@ public class SalaController {
 	 * Selecionar operação a ser realizada
 	 * 
 	 * @throws IOException
+	 * @throws ParseException
 	 */
-	public void selecionarOperacao() throws IOException {
+	public void selecionarOperacao() throws IOException, ParseException {
 
 		Scanner entrada = new Scanner(System.in);
 
-		System.out.println("####### Gerenciar Sala de Aula #######");
-		System.out.println("---------------------------------------");
-		System.out.println("Por favor digite uma opção desejada:");
-		System.out.println("1 - Cadastrar uma nova sala.;");
-		System.out.println("2 - Listar sala(s) existente(s).;");
-		System.out.println("9 - << Voltar.;");
-		System.out.println("---------------------------------------");
+		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setBreadCrumb("Gerenciar Sala de Aula");
+		ViewConsoleUtil.setDivisor();
+		ViewConsoleUtil.setMensagemOpcao("Por favor digite uma opção desejada:");
+		ViewConsoleUtil.setOpcao(1, "Cadastrar uma nova sala");
+		ViewConsoleUtil.setOpcao(2, "Listar sala(s) existente(s)");
+		ViewConsoleUtil.setOpcao(9, "<< Voltar");
+		ViewConsoleUtil.setDivisor();
 
 		String operacao = entrada.nextLine();
 
@@ -55,39 +60,23 @@ public class SalaController {
 	 * Pre cadastrar sala de aula
 	 * 
 	 * @throws IOException
+	 * @throws ParseException
 	 */
-	private void preCadastrarSala() throws IOException {
-		
+	private void preCadastrarSala() throws IOException, ParseException {
+
 		Scanner entrada = new Scanner(System.in);
 
-		System.out.println("####### Cadastrar Sala de Aula #######");
-		System.out.println("---------------------------------------");
-		System.out.println("Por favor digite o número da sala:");
+		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setBreadCrumb("Cadastrar Sala de Aula");
+		ViewConsoleUtil.setDivisor();
+		ViewConsoleUtil.setMensagemOpcao("Por favor digite o número da sala");
 		String numero = entrada.nextLine();
-		System.out.println("---------------------------------------");
+		ViewConsoleUtil.setDivisor();
 
 		if (!numero.isEmpty())
 			cadastrarSala(numero);
 		else {
-			System.out.println("\n**Número: campo obrigatório não informado. \n");
-			preCadastrarSala();
-		}
-
-	}
-
-	private void preListar() throws IOException {
-		Scanner entrada = new Scanner(System.in);
-
-		System.out.println("####### Buscar Sala de Aula #######");
-		System.out.println("---------------------------------------");
-		System.out.println("Por favor digite um número da sala:");
-		String numero = entrada.nextLine();
-		System.out.println("---------------------------------------");
-
-		if (!numero.isEmpty())
-			cadastrarSala(numero);
-		else {
-			System.out.println("\n**Número: campo obrigatório não informado. \n");
+			ViewConsoleUtil.setMensagemErro("Número: campo obrigatório não informado.");
 			preCadastrarSala();
 		}
 
@@ -98,27 +87,30 @@ public class SalaController {
 	 * 
 	 * @param numero
 	 * @throws IOException
+	 * @throws ParseException
 	 */
-	private void cadastrarSala(String numero) throws IOException {
+	private void cadastrarSala(String numero) throws IOException, ParseException {
 		SalaDao dao = new SalaDao();
 		dao.salvar(new Sala(numero));
-		System.out.println("<<Cadastro realizado com sucesso.>>");
+		ViewConsoleUtil.setMensagemOperacao("Cadastro realizado com sucesso");
 		selecionarOperacao();
 	}
-	
+
 	/**
 	 * Listar sala de aula
 	 * 
 	 * @throws IOException
+	 * @throws ParseException
 	 */
-	private void listarSalas() throws IOException {
+	private void listarSalas() throws IOException, ParseException {
+
 		Scanner entrada = new Scanner(System.in);
 
-		System.out.println("####### Listar Sala de Aula #######");
-		System.out.println("---------------------------------------");
-		System.out.println("Por favor digite o número da sala de aula:");
+		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setBreadCrumb("Listar Sala de Aula");
+		ViewConsoleUtil.setDivisor();
+		ViewConsoleUtil.setMensagemOpcao("Por favor digite o número da sala de aula");
 		String filtro = entrada.nextLine();
-		System.out.println("---------------------------------------");
 
 		buscar(filtro);
 	}
@@ -128,34 +120,42 @@ public class SalaController {
 	 * 
 	 * @param numero
 	 * @throws IOException
+	 * @throws ParseException
 	 */
-	private void buscar(String filtro) throws IOException {
+	private void buscar(String filtro) throws IOException, ParseException {
+
 		SalaDao dao = new SalaDao();
 		List<Sala> resultado = dao.findByNumero(filtro);
+		
+		ViewConsoleUtil.setDivisor();
 
 		if (resultado.isEmpty())
-			System.out.println("\n**Nenhum registro foi encontrado.\n");
+			ViewConsoleUtil.setMensagemErro("Nenhum registro foi encontrado");
 		else {
-			System.out.println(" id | Numero | Operação ");
+			ViewConsoleUtil.setTabelaHead("id", "Número", "Operação");
 			for (Sala sala : resultado) {
-				System.out.println(
-						" " + sala.getId() + " | " + sala.getNumero() + " | R - Remover / B - Buscar / V - Voltar");
+				System.out.println("");
+				ViewConsoleUtil.setTabelaItem(String.valueOf(sala.getId()), sala.getNumero(),
+						"R - Remover / B - Buscar / V - Voltar");
 			}
 		}
 
 		System.out.println("");
 		System.out.println("Total de " + resultado.size() + " salas encontradas.");
+		System.out.println("");
 
 		Scanner entrada = new Scanner(System.in);
 
-		System.out.println("####### Listar Sala de Aula #######");
-		System.out.println("---------------------------------------");
-		System.out.println("Por favor informe a operação desejada:");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe a operação desejada");
 		String operacao = entrada.nextLine();
 
 		String regex = "\\d+";
 		if (!operacao.matches(regex))
 			operacao = operacao.toUpperCase();
+		else{
+			ViewConsoleUtil.setMensagemErro("A opção informada não pode ser um número");
+			buscar(filtro);
+		}
 
 		switch (operacao) {
 		case "R":
@@ -168,7 +168,7 @@ public class SalaController {
 			selecionarOperacao();
 			break;
 		default:
-			System.out.println("Opção selecionada inexistente");
+			ViewConsoleUtil.setMensagemErro("Opção selecionada inexistente");
 			buscar(filtro);
 			break;
 		}
@@ -177,39 +177,57 @@ public class SalaController {
 
 	/**
 	 * Pre remover sala de aula
+	 * 
 	 * @throws NumberFormatException
 	 * @throws IOException
+	 * @throws ParseException
 	 */
-	private void preRemover() throws NumberFormatException, IOException {
+	private void preRemover() throws NumberFormatException, IOException, ParseException {
+
 		Scanner entrada = new Scanner(System.in);
 
-		System.out.println("---------------------------------------");
-		System.out.println("Por favor informe o id da sala de aula que você deseja remover:");
+		ViewConsoleUtil.setDivisor();
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o id da sala de aula que você deseja remover");
 		String idSala = entrada.nextLine();
-		if (idSala.contains("[a-zA-Z]+") == false && idSala.length() > 3) {
-			System.out.println("Por favor informe um número válido");
+		
+		String regex = "\\d+";
+		if (!idSala.matches(regex)){
+			ViewConsoleUtil.setMensagemErro("A opção informada deve ser um número");
 			preRemover();
-		} else
+		}else
 			remover(Integer.parseInt(idSala));
 	}
 
 	/**
 	 * Remover Sala de aula
+	 * 
 	 * @param id
 	 * @throws IOException
+	 * @throws ParseException
 	 */
-	private void remover(int id) throws IOException {
+	private void remover(int id) throws IOException, ParseException {
+
 		SalaDao dao = new SalaDao();
+		Sala objRemovido = dao.findById(id);
+		if(objRemovido != null){
+			ViewConsoleUtil.setMensagemErro("O registro informado " + id+" não foi encontrado.");
+			preRemover();
+		}
 		dao.remover(new Sala(id));
-		System.out.println("<<Sala de aula removida com sucesso.>>");
+		ViewConsoleUtil.setMensagemOperacao("Sala de aula removida com sucesso");
 		selecionarOperacao();
 	}
-	
+
 	/**
 	 * Voltar para aréa administrativa
+	 * 
+	 * @throws IOException
+	 * @throws ParseException
 	 */
-	private void voltar() {
-		// TODO AINDA VAI SER CRIADO
+	private void voltar() throws ParseException, IOException {
+
+		MenuController menu = new MenuController();
+		menu.getTelaMenu();
 
 	}
 

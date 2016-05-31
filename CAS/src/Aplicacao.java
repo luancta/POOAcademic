@@ -1,5 +1,3 @@
-import java.util.Scanner;
-
 import cas.acesso.controller.AutenticacaoController;
 import cas.util.util.BancoUtil;
 import cas.util.util.ConexaoUtil;
