@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;
 
+import cas.espacoFisico.controller.AplicativoController;
 import cas.espacoFisico.controller.ProjetorController;
 import cas.espacoFisico.controller.SalaController;
 
@@ -19,6 +20,7 @@ public class MenuController {
 		System.out.println("2 - Gerenciar Sala de Aula");
 		System.out.println("3 - Gerenciar Turma");
 		System.out.println("4 - Gerenciar Projetor");
+		System.out.println("5 - Gerenciar Aplicativo");
 		
 		String operacao = entrada.nextLine();
 		
@@ -34,6 +36,10 @@ public class MenuController {
 		case "4":
 			ProjetorController projetorController = new ProjetorController();
 			projetorController.selecionarOperacao();
+			break;
+		case "5":
+			AplicativoController aplicativoController = new AplicativoController();
+			aplicativoController.selecionarOperacao();
 			break;
 		default: System.out.println("Opção selecionada inexistente"); 
 				 getTelaMenu();
