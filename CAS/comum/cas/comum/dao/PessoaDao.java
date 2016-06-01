@@ -26,9 +26,28 @@ import cas.util.util.GenericDao;
 		 * @param dataDataNascimento 
 		 */
 	public void cadastrarPessoa(String nome, Date dataDataNascimento, String cpf, String rg, String nomeMae, String nomePai, String endereco, String bairro, String cep, String login, String senha, int tipoUsuario){
-		PessoaDao dao = new PessoaDao();
-		dao.save(" INSERT INTO comum.pessoa (nome, cpf, registro_geral, nome_mae, nome_pai, endereco, bairro, cep, data_nascimento) " + 
-		" VALUES (?,?,?,?,?,?,?,?,?) ", nome, cpf, rg, nomeMae, nomePai, endereco, bairro, cep, dataDataNascimento);
+		try {
+			PreparedStatement pstmt = getConnection()
+					.prepareStatement(" INSERT INTO comum.pessoa (nome, cpf, registro_geral, nome_mae, nome_pai, endereco, bairro, cep, data_nascimento) " + 
+							" VALUES (?,?,?,?,?,?,?,?,?) ");
+
+			pstmt.setString(1, nome);
+			pstmt.setString(2, cpf);
+			pstmt.setString(3, rg);
+			pstmt.setString(4, nomeMae);
+			pstmt.setString(5, nomePai);
+			pstmt.setString(6, endereco);
+			pstmt.setString(7, bairro);
+			pstmt.setString(8, cep);
+			pstmt.setDate(9, new java.sql.Date(dataDataNascimento.getTime()));
+			
+			pstmt.execute();
+			pstmt.close();
+
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	
 	}
 	
 	/**
@@ -36,17 +55,21 @@ import cas.util.util.GenericDao;
 	 * @param desc
 	 * @return
 	 */
-	public Integer findUltimoRegistroCadastrado(){
+	public Integer findUltimoRegistroCadastrado(String cpf){
 		Connection con = getConnection();
 		
-		String sql = "SELECT MAX(id_pessoa) FROM comum.pessoa ";
+		String sql = "SELECT id_pessoa FROM comum.pessoa WHERE cpf = ?";
 		
 		try{
 			PreparedStatement stm = con.prepareStatement(sql);
-			
+			stm.setString(1, cpf);
 			ResultSet rs = stm.executeQuery();
 			
-			return rs.getRow();
+			while (rs.next()) {
+				return rs.getInt("id_pessoa");
+			}
+			return null;
+			
 		}catch (SQLException e){
 			throw new RuntimeException(e);
 		}

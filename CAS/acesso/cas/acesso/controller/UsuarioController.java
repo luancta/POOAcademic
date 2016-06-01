@@ -139,7 +139,7 @@ public class UsuarioController {
 		}
 		PessoaDao pessoaDao = new PessoaDao();
 		pessoaDao.cadastrarPessoa(nome, dataDataNascimento, cpf, rg, nomeMae, nomePai, endereco, bairro, cep, login, senha, numeroTipoUsuario);
-		Integer idPessoa = pessoaDao.findUltimoRegistroCadastrado();
+		Integer idPessoa = pessoaDao.findUltimoRegistroCadastrado(cpf);
 		UsuarioDao usuarioDao = new UsuarioDao();
 		usuarioDao.cadastrarUsuario(login, senha, numeroTipoUsuario, idPessoa);
 	}

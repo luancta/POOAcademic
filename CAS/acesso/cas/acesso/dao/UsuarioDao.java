@@ -84,8 +84,21 @@ public class UsuarioDao extends GenericDao {
 		}
 		
 		public void cadastrarUsuario(String login, String senha, int tipoUsuario, int idPessoa){
-			UsuarioDao dao = new UsuarioDao();
-			dao.save(" INSERT INTO acesso.usuario (login, senha, tipo_usuario, id_pessoa) " +  
-			" VALUES (?,?,?,?) ", login, senha, tipoUsuario, idPessoa);
+			try {
+				PreparedStatement pstmt = getConnection()
+						.prepareStatement(" INSERT INTO acesso.usuario (login, senha, tipo_usuario, id_pessoa) " +  
+				" VALUES (?,?,?,?) ");
+				
+				pstmt.setString(1, login);
+				pstmt.setString(2, senha);
+				pstmt.setInt(3, tipoUsuario);
+				pstmt.setInt(4, idPessoa);
+	
+				pstmt.execute();
+				pstmt.close();
+
+			} catch (SQLException e) {
+				throw new RuntimeException(e);
+			}
 		}
 }
