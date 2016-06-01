@@ -9,6 +9,14 @@ public class LocalAula {
 	private String bloco;
 	//capacidade das salas e/ou laboratórios
 	private int capacidade;
+	
+	public LocalAula() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public LocalAula(int id) {
+		this.id = id;
+	}
 
 	//Set e Get
 	public int getId() {
