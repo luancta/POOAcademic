@@ -30,9 +30,10 @@ public class ProjetorController {
 		Scanner entrada = new Scanner(System.in);
 
 		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setDivisor();
 		ViewConsoleUtil.setBreadCrumb("Gerenciar Projetor de Aula");
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite uma opção desejada:");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe uma opção desejada:");
 		ViewConsoleUtil.setOpcao(1, "Cadastrar um novo projetor");
 		ViewConsoleUtil.setOpcao(2, "Listar projetores existentes");
 		ViewConsoleUtil.setOpcao(9, "<< Voltar");
@@ -69,6 +70,7 @@ public class ProjetorController {
 		Projetor projetor = new Projetor();
 
 		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setDivisor();
 		ViewConsoleUtil.setBreadCrumb("Cadastrar Projetor de Aula");
 		ViewConsoleUtil.setDivisor();
 
@@ -86,7 +88,7 @@ public class ProjetorController {
 	 */
 	private void informarTombo(Scanner entrada, Projetor projetor) {
 
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite o número da tombo correspondente");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o número da tombo correspondente");
 		String tombo = entrada.nextLine();
 		ViewConsoleUtil.setDivisor();
 
@@ -105,7 +107,7 @@ public class ProjetorController {
 	 */
 	private void informarMarca(Scanner entrada, Projetor projetor) {
 
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite o número da marca correspondente");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o número da marca correspondente");
 		for (Marca marca : Marca.values())
 			ViewConsoleUtil.setOpcao(marca.ordinal(), marca.name());
 
@@ -146,9 +148,10 @@ public class ProjetorController {
 		Scanner entrada = new Scanner(System.in);
 
 		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setDivisor();
 		ViewConsoleUtil.setBreadCrumb("Listar Projetor de Aula");
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite o número da projetor de aula");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o número da projetor de aula");
 		String filtro = entrada.nextLine();
 
 		buscar(filtro);
@@ -232,7 +235,7 @@ public class ProjetorController {
 
 		String regex = "\\d+";
 		if (!idProjetor.matches(regex)) {
-			ViewConsoleUtil.setMensagemErro("A opção informada deve ser um número");
+			ViewConsoleUtil.setMensagemErro("A opção informada deve ser um id");
 			preRemover();
 		} else
 			remover(Integer.parseInt(idProjetor));

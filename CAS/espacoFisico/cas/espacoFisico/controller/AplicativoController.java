@@ -29,9 +29,10 @@ public class AplicativoController {
 		Scanner entrada = new Scanner(System.in);
 
 		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setDivisor();
 		ViewConsoleUtil.setBreadCrumb("Gerenciar Aplicativo de Aula");
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite uma opção desejada:");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe uma opção desejada:");
 		ViewConsoleUtil.setOpcao(1, "Cadastrar um novo aplicativo");
 		ViewConsoleUtil.setOpcao(2, "Listar aplicativo(s) existente(s)");
 		ViewConsoleUtil.setOpcao(9, "<< Voltar");
@@ -67,16 +68,17 @@ public class AplicativoController {
 		Scanner entrada = new Scanner(System.in);
 
 		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setDivisor();
 		ViewConsoleUtil.setBreadCrumb("Cadastrar Aplicativo");
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite o nome do aplicativo");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o nome do aplicativo");
 		String nome = entrada.nextLine();
 		ViewConsoleUtil.setDivisor();
 
 		if (!nome.isEmpty())
 			cadastrarAplicativo(nome);
 		else {
-			ViewConsoleUtil.setMensagemErro("Número: campo obrigatório não informado.");
+			ViewConsoleUtil.setMensagemErro("Número: Campo obrigatório não informado.");
 			preCadastrarAplicativo();
 		}
 
@@ -107,9 +109,10 @@ public class AplicativoController {
 		Scanner entrada = new Scanner(System.in);
 
 		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setDivisor();
 		ViewConsoleUtil.setBreadCrumb("Listar Aplicativo");
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite o nome do aplicativo");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o nome do aplicativo");
 		String filtro = entrada.nextLine();
 
 		buscar(filtro);
@@ -127,6 +130,7 @@ public class AplicativoController {
 		AplicativoDao dao = new AplicativoDao();
 		List<Aplicativo> resultado = dao.findByNome(filtro);
 		
+		ViewConsoleUtil.limparConsole();
 		ViewConsoleUtil.setDivisor();
 
 		if (resultado.isEmpty()){
@@ -193,7 +197,7 @@ public class AplicativoController {
 		
 		String regex = "\\d+";
 		if (!idAplicativo.matches(regex)){
-			ViewConsoleUtil.setMensagemErro("A opção informada deve ser um número");
+			ViewConsoleUtil.setMensagemErro("A opção informada deve ser um id");
 			preRemover();
 		}else
 			remover(Integer.parseInt(idAplicativo));

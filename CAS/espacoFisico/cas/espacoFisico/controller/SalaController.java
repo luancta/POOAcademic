@@ -29,6 +29,7 @@ public class SalaController {
 		Scanner entrada = new Scanner(System.in);
 
 		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setDivisor();
 		ViewConsoleUtil.setBreadCrumb("Gerenciar Sala de Aula");
 		ViewConsoleUtil.setDivisor();
 		ViewConsoleUtil.setMensagemOpcao("Por favor digite uma opção desejada:");
@@ -67,16 +68,17 @@ public class SalaController {
 		Scanner entrada = new Scanner(System.in);
 
 		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setDivisor();
 		ViewConsoleUtil.setBreadCrumb("Cadastrar Sala de Aula");
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite o número da sala");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o número da sala");
 		String numero = entrada.nextLine();
 		ViewConsoleUtil.setDivisor();
 
 		if (!numero.isEmpty())
 			cadastrarSala(numero);
 		else {
-			ViewConsoleUtil.setMensagemErro("Número: campo obrigatório não informado.");
+			ViewConsoleUtil.setMensagemErro("Número: Campo obrigatório não informado.");
 			preCadastrarSala();
 		}
 
@@ -107,9 +109,11 @@ public class SalaController {
 		Scanner entrada = new Scanner(System.in);
 
 		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setDivisor();
 		ViewConsoleUtil.setBreadCrumb("Listar Sala de Aula");
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite o número da sala de aula");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o número da sala de aula para realizar a busca");
 		String filtro = entrada.nextLine();
 
 		buscar(filtro);
@@ -127,6 +131,7 @@ public class SalaController {
 		SalaDao dao = new SalaDao();
 		List<Sala> resultado = dao.findByNumero(filtro);
 		
+		ViewConsoleUtil.limparConsole();
 		ViewConsoleUtil.setDivisor();
 
 		if (resultado.isEmpty()){
@@ -154,7 +159,7 @@ public class SalaController {
 		if (!operacao.matches(regex))
 			operacao = operacao.toUpperCase();
 		else{
-			ViewConsoleUtil.setMensagemErro("A opção informada não pode ser um número");
+			ViewConsoleUtil.setMensagemErro("Opção selecionada inexistente");
 			buscar(filtro);
 		}
 
@@ -193,7 +198,8 @@ public class SalaController {
 		
 		String regex = "\\d+";
 		if (!idSala.matches(regex)){
-			ViewConsoleUtil.setMensagemErro("A opção informada deve ser um número");
+			ViewConsoleUtil.setDivisor();
+			ViewConsoleUtil.setMensagemErro("A opção informada deve ser um id");
 			preRemover();
 		}else
 			remover(Integer.parseInt(idSala));
@@ -210,7 +216,8 @@ public class SalaController {
 
 		SalaDao dao = new SalaDao();
 		Sala objRemovido = dao.findById(id);
-		if(objRemovido == null){
+		if(objRemovido.getId() == 0){
+			ViewConsoleUtil.setDivisor();
 			ViewConsoleUtil.setMensagemErro("O registro informado " + id+" não foi encontrado.");
 			preRemover();
 		}

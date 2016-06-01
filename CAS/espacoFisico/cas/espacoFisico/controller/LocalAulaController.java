@@ -33,9 +33,10 @@ public class LocalAulaController {
 		Scanner entrada = new Scanner(System.in);
 
 		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setDivisor();
 		ViewConsoleUtil.setBreadCrumb("Gerenciar Local de Aula");
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite uma opção desejada:");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe uma opção desejada:");
 		ViewConsoleUtil.setOpcao(1, "Cadastrar um novo local de aula");
 		ViewConsoleUtil.setOpcao(2, "Listar locais de aula existentes");
 		ViewConsoleUtil.setOpcao(9, "<< Voltar");
@@ -72,6 +73,7 @@ public class LocalAulaController {
 		LocalAula localAula = new LocalAula();
 
 		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setDivisor();
 		ViewConsoleUtil.setBreadCrumb("Cadastrar Local de Aula");
 		ViewConsoleUtil.setDivisor();
 
@@ -99,7 +101,7 @@ public class LocalAulaController {
 
 	private void informarBloco(Scanner entrada, LocalAula localAula) {
 
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite o bloco correspondente");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o bloco correspondente");
 		String bloco = entrada.nextLine();
 		ViewConsoleUtil.setDivisor();
 
@@ -112,7 +114,7 @@ public class LocalAulaController {
 
 	private void informarCapacidade(Scanner entrada, LocalAula localAula) {
 
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite a capacidade correspondente");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe a capacidade correspondente");
 		String capacidade = entrada.nextLine();
 		ViewConsoleUtil.setDivisor();
 
@@ -133,7 +135,7 @@ public class LocalAulaController {
 
 		listarSalas();
 
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite o número da sala correspondente");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o número da sala correspondente");
 		String sala = entrada.nextLine();
 		ViewConsoleUtil.setDivisor();
 
@@ -158,9 +160,10 @@ public class LocalAulaController {
 		Scanner entrada = new Scanner(System.in);
 
 		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setDivisor();
 		ViewConsoleUtil.setBreadCrumb("Listar Sala de Aula");
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite o número da sala de aula");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o número da sala de aula");
 		String filtro = entrada.nextLine();
 
 		buscarSala(filtro);
@@ -169,7 +172,7 @@ public class LocalAulaController {
 	/**
 	 * Buscar e listar sala de aula
 	 * 
-	 * @param numero
+	 * @param filtro
 	 * @throws IOException
 	 * @throws ParseException
 	 */
@@ -195,11 +198,18 @@ public class LocalAulaController {
 		}
 	}
 
+	/**
+	 * Informar Laboratório
+	 * @param entrada
+	 * @param localAula
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	private void informarLaboratorio(Scanner entrada, LocalAula localAula) throws IOException, ParseException {
 
 		listarLaboratorio();
 
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite o nome do laboratório correspondente");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o nome do laboratório correspondente");
 		String laboratorio = entrada.nextLine();
 		ViewConsoleUtil.setDivisor();
 
@@ -214,7 +224,7 @@ public class LocalAulaController {
 	}
 
 	/**
-	 * Listar sala de aula
+	 * Listar laboratório
 	 * 
 	 * @throws IOException
 	 * @throws ParseException
@@ -226,16 +236,16 @@ public class LocalAulaController {
 		ViewConsoleUtil.limparConsole();
 		ViewConsoleUtil.setBreadCrumb("Listar Laboratório");
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite o nome do laboratório");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o nome do laboratório");
 		String filtro = entrada.nextLine();
 
 		buscarLaboratorio(filtro);
 	}
 
 	/**
-	 * Buscar e listar sala de aula
+	 * Buscar e listar laboratórios
 	 * 
-	 * @param numero
+	 * @param filtro
 	 * @throws IOException
 	 * @throws ParseException
 	 */
@@ -276,7 +286,7 @@ public class LocalAulaController {
 	}
 
 	/**
-	 * Listar localAula de aula
+	 * Listar local de aula
 	 * 
 	 * @throws IOException
 	 * @throws ParseException
@@ -288,16 +298,16 @@ public class LocalAulaController {
 		ViewConsoleUtil.limparConsole();
 		ViewConsoleUtil.setBreadCrumb("Listar Local de Aula");
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite o número do local de aula");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o número do local de aula");
 		String filtro = entrada.nextLine();
 
 		buscar(filtro);
 	}
 
 	/**
-	 * Buscar e listar localAula de aula
+	 * Buscar e listar local de aula
 	 * 
-	 * @param tombo
+	 * @param filtro
 	 * @throws IOException
 	 * @throws ParseException
 	 */
@@ -375,7 +385,7 @@ public class LocalAulaController {
 
 		String regex = "\\d+";
 		if (!idLocalAula.matches(regex)) {
-			ViewConsoleUtil.setMensagemErro("A opção informada deve ser um número");
+			ViewConsoleUtil.setMensagemErro("A opção informada deve ser um id");
 			preRemover();
 		} else
 			remover(Integer.parseInt(idLocalAula));
