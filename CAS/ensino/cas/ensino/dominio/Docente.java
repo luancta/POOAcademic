@@ -8,6 +8,10 @@ public class Docente {
 	private String matricula;
 	private Pessoa pessoa;
 	
+	public Docente(int id) {
+	}
+	public Docente() {
+	}
 	public int getId() {
 		return id;
 	}

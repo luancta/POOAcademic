@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.Date;
 
 import cas.acesso.dao.UsuarioDao;
+import cas.comum.dominio.Pessoa;
 import cas.util.util.GenericDao;
 
 	public class PessoaDao extends GenericDao{
@@ -51,27 +52,50 @@ import cas.util.util.GenericDao;
 	}
 	
 	/**
-	 * Retorna usuario por login
+	 * Retorna Pessoa por CPF
 	 * @param desc
 	 * @return
 	 */
-	public Integer findPessoaByCpf(String cpf){
+	public Pessoa findPessoaByCpf(String cpf){
 		Connection con = getConnection();
 		
-		String sql = "SELECT id_pessoa FROM comum.pessoa WHERE cpf = ?";
+		String sql = "SELECT * FROM comum.pessoa WHERE cpf = ? ";
 		
 		try{
 			PreparedStatement stm = con.prepareStatement(sql);
 			stm.setString(1, cpf);
 			ResultSet rs = stm.executeQuery();
-			
-			while (rs.next()) {
-				return rs.getInt("id_pessoa");
-			}
-			return null;
+			rs.next();
+			Pessoa pessoa =  populaPessoa(rs);
+			if(pessoa != null && pessoa.getId() > 0)
+				return pessoa;
+			else
+				return null;
 			
 		}catch (SQLException e){
 			throw new RuntimeException(e);
 		}
+	}
+	
+	/**
+	 * Popula Pessoa
+	 * 
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
+	private Pessoa populaPessoa(ResultSet rs) throws SQLException {
+		Pessoa pessoa = new Pessoa();
+		pessoa.setId(rs.getInt("id_pessoa"));
+		pessoa.setNome(rs.getString("nome"));
+		pessoa.setCpf(rs.getString("cpf"));
+		pessoa.setRg(rs.getString("registro_geral"));
+		pessoa.setNomeMae(rs.getString("nome_mae"));
+		pessoa.setNomePai(rs.getString("nome_pai"));
+		pessoa.setEndereco(rs.getString("endereco"));
+		pessoa.setBairro(rs.getString("bairro"));
+		pessoa.setCep(rs.getString("cep"));
+		pessoa.setDataNascimento(rs.getDate("data_nascimento"));
+		return pessoa;
 	}
 }

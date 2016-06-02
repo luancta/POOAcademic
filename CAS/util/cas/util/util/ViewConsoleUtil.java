@@ -107,6 +107,10 @@ public class ViewConsoleUtil {
 			} else {
 				Runtime.getRuntime().exec("clear");
 			}
+			for(int i = 0; i < 1000; i++)
+			{
+			    System.out.println("\b");
+			}
 		}
 
 		catch (final Exception e) {

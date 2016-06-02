@@ -16,6 +16,10 @@ public class Pessoa {
 	private String cep;
 	
 	
+	public Pessoa(int idPessoa) {
+	}
+	public Pessoa() {
+	}
 	public int getId() {
 		return id;
 	}

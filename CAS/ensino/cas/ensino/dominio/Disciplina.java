@@ -6,6 +6,34 @@ public class Disciplina {
 	private String nome;
 	private String sigla;
 	
+	public Disciplina() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	public Disciplina(int id) {
+		this.id = id;
+	}
+	
+	public Disciplina(String nome) {
+		this.nome = nome;
+	}
+	
+	public Disciplina(String nome, String sigla) {
+		this.nome = nome;
+		this.sigla = sigla;
+	}
+
+	public Disciplina(int id, String nome) {
+		this.id = id;
+		this.nome = nome;
+	}
+	
+	public Disciplina(int id, String nome, String sigla) {
+		this.id = id;
+		this.nome = nome;
+		this.sigla = sigla;
+	}
+
 	public int getId() {
 		return id;
 	}

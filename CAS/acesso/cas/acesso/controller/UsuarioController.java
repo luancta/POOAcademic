@@ -3,8 +3,6 @@ package cas.acesso.controller;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -12,7 +10,6 @@ import cas.acesso.dao.UsuarioDao;
 import cas.acesso.dominio.TipoUsuario;
 import cas.acesso.dominio.Usuario;
 import cas.comum.controller.PessoaController;
-import cas.comum.dao.PessoaDao;
 import cas.util.util.ViewConsoleUtil;
 
 public class UsuarioController {

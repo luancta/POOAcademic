@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 import cas.comum.dao.PessoaDao;
+import cas.comum.dominio.Pessoa;
 
 public class PessoaController {
 	
@@ -82,7 +83,7 @@ public class PessoaController {
 		}
 		PessoaDao pessoaDao = new PessoaDao();
 		pessoaDao.cadastrarPessoa(nome, dataDataNascimento, cpf, rg, nomeMae, nomePai, endereco, bairro, cep);
-		Integer idPessoa = pessoaDao.findPessoaByCpf(cpf);
-		return idPessoa;
+		Pessoa pessoa = pessoaDao.findPessoaByCpf(cpf);
+		return pessoa.getId();
 	}
 }
