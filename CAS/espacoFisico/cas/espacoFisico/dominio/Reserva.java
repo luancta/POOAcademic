@@ -1,6 +1,6 @@
 package cas.espacoFisico.dominio;
 
-import java.util.Date;
+import java.sql.Date;
 
 import cas.ensino.dominio.Turma;
 
@@ -17,6 +17,14 @@ public class Reserva {
 	private Turma turma;
 	/** Indica o local do laboratório e ou sala que foi reservado */
 	private LocalAula localAula;
+	
+	public Reserva() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public Reserva(int id) {
+		this.id = id;
+	}
 	
 	public int getId() {
 		return id;

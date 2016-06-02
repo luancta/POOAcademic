@@ -8,6 +8,7 @@ import cas.espacoFisico.controller.AplicativoController;
 import cas.espacoFisico.controller.LaboratorioController;
 import cas.espacoFisico.controller.LocalAulaController;
 import cas.espacoFisico.controller.ProjetorController;
+import cas.espacoFisico.controller.ReservaController;
 import cas.espacoFisico.controller.SalaController;
 
 public class MenuController {
@@ -27,6 +28,7 @@ public class MenuController {
 		System.out.println("7 - Gerenciar Local Aula");
 		System.out.println("8 - Gerenciar Estudante");
 		System.out.println("9 - Gerenciar Turma");
+		System.out.println("10 - Gerenciar Reserva");
 		
 		String operacao = entrada.nextLine();
 		
@@ -62,6 +64,10 @@ public class MenuController {
 		case "9":
 			TurmaController turmaController = new TurmaController();
 			turmaController.selecionarOperacao();
+			break;
+		case "10":
+			ReservaController reservaController = new ReservaController();
+			reservaController.selecionarOperacao();
 			break;
 		default: System.out.println("Opção selecionada inexistente"); 
 				 getTelaMenu();
