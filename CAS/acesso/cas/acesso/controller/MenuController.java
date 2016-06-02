@@ -3,6 +3,7 @@ package cas.acesso.controller;
 import java.util.Scanner;
 
 import cas.ensino.controller.EstudanteController;
+import cas.ensino.controller.TurmaController;
 import cas.espacoFisico.controller.AplicativoController;
 import cas.espacoFisico.controller.LaboratorioController;
 import cas.espacoFisico.controller.LocalAulaController;
@@ -25,6 +26,7 @@ public class MenuController {
 		System.out.println("6 - Gerenciar Laboratório");
 		System.out.println("7 - Gerenciar Local Aula");
 		System.out.println("8 - Gerenciar Estudante");
+		System.out.println("9 - Gerenciar Turma");
 		
 		String operacao = entrada.nextLine();
 		
@@ -56,6 +58,10 @@ public class MenuController {
 		case "8":
 			EstudanteController estudanteController = new EstudanteController();
 			estudanteController.selecionarOperacao();
+			break;
+		case "9":
+			TurmaController turmaController = new TurmaController();
+			turmaController.selecionarOperacao();
 			break;
 		default: System.out.println("Opção selecionada inexistente"); 
 				 getTelaMenu();
