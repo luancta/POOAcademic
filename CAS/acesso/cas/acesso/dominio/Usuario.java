@@ -7,8 +7,17 @@ public class Usuario {
 	private int id;
 	private String login;
 	private String senha;
-	private TipoUsuario tipoUsuario;
+	private Integer tipoUsuario;
 	private Pessoa pessoa;
+	
+	public Usuario () {
+		// TODO Auto-generated constructor stub
+	}
+
+	
+	public Usuario(int id) {
+		this.id = id;
+	}
 	
 	public int getId() {
 		return id;
@@ -28,17 +37,18 @@ public class Usuario {
 	public void setSenha(String senha) {
 		this.senha = senha;
 	}
-	public TipoUsuario getTipoUsuario() {
-		return tipoUsuario;
-	}
-	public void setTipoUsuario(TipoUsuario tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
-	}
+
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
+	}
+	public Integer getTipoUsuario() {
+		return tipoUsuario;
+	}
+	public void setTipoUsuario(Integer tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
 	}
 	
 	

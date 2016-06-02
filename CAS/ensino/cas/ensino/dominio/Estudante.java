@@ -9,6 +9,15 @@ public class Estudante {
 	private String curso;
 	private Pessoa pessoa;
 	
+	public Estudante () {
+		// TODO Auto-generated constructor stub
+	}
+
+	
+	public Estudante(int id) {
+		this.id = id;
+	}
+	
 	public int getId() {
 		return id;
 	}

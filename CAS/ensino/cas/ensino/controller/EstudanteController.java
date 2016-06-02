@@ -1,21 +1,17 @@
-package cas.acesso.controller;
+package cas.ensino.controller;
 
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import cas.acesso.dao.UsuarioDao;
-import cas.acesso.dominio.TipoUsuario;
-import cas.acesso.dominio.Usuario;
 import cas.comum.controller.PessoaController;
-import cas.comum.dao.PessoaDao;
+import cas.ensino.dao.EstudanteDao;
+import cas.ensino.dominio.Estudante;
 import cas.util.util.ViewConsoleUtil;
 
-public class UsuarioController {
+public class EstudanteController {
 
 	/**
 	 * Selecionar operação a ser realizada
@@ -25,20 +21,20 @@ public class UsuarioController {
 		
 		Scanner entrada = new Scanner(System.in);
 		
-		System.out.println("####### Gerenciar Usuário #######");
+		System.out.println("####### Gerenciar Estudante #######");
 		System.out.println("---------------------------------------");
 		System.out.println("Por favor digite uma opção desejada:");
-		System.out.println("1 - Cadastrar um novo usuário.;");
-		System.out.println("2 - Listar usuário(s) existente(s).;");
-		System.out.println("3 - Remover usuário(s) existente(s).;");
+		System.out.println("1 - Cadastrar um novo estudante.;");
+		System.out.println("2 - Listar estudante(s) existente(s).;");
+		System.out.println("3 - Remover estudante(s) existente(s).;");
 		System.out.println("9 - << Voltar.;");
 		System.out.println("---------------------------------------");
 		
 		String operacao = entrada.nextLine();
 		
 		switch (operacao) {
-		case "1":preCadastrarUsuario(); break;
-		case "2":listarUsuario(); break;
+		case "1":preCadastrarEstudante(); break;
+		case "2":listarEstudante(); break;
 		case "9":voltar(); break;
 		default: System.out.println("Opção selecionada inexistente"); 
 				 selecionarOperacao();
@@ -50,45 +46,31 @@ public class UsuarioController {
 	 * Pre cadastrar usuário
 	 * @throws ParseException 
 	 */
-	private void preCadastrarUsuario() throws ParseException{
-		Scanner entrada = new Scanner(System.in);
-		
+	private void preCadastrarEstudante() throws ParseException{
 		PessoaController pessoaController = new PessoaController();
 		Integer idPessoa = pessoaController.cadastrarPessoa();
 		if(idPessoa == null){
-			preCadastrarUsuario();
+			preCadastrarEstudante();
 		}
-		
-		System.out.println("Por favor digite o LOGIN:");
-		String login = entrada.nextLine();
-		System.out.println("Por favor digite o SENHA:");
-		String senha = entrada.nextLine();
-		System.out.println("Por favor digite uma opção desejada:");
-		System.out.println("1 - Usuário Administrador");
-		System.out.println("2 - Usuário Coordenandor");
-		System.out.println("3 - Usuário Secretário");
-		String tipoUsuario = entrada.nextLine();
+		Scanner entrada = new Scanner(System.in);
+		System.out.println("---------------------------------------");
+		System.out.println("Por favor digite a matrícula:");
+		String matricula = entrada.nextLine();
+		System.out.println("Por favor digite o curso:");
+		String curso = entrada.nextLine();
 		System.out.println("---------------------------------------");
 		
-		Integer numeroTipoUsuario = null;
-		if(login.isEmpty()){
-			System.out.println("\n**Login: campo obrigatório não informado. \n");
-			preCadastrarUsuario();
+		if(matricula.isEmpty()){
+			System.out.println("\n**Matrícula: campo obrigatório não informado. \n");
+			preCadastrarEstudante();
 		}
-		if(senha.isEmpty()){
+		if(curso.isEmpty()){
 			System.out.println("\n**Senha: campo obrigatório não informado. \n");
-			preCadastrarUsuario();
-		}
-		if(tipoUsuario.isEmpty()){
-			System.out.println("\n**Tipo Usuário: campo obrigatório não informado. \n");
-			preCadastrarUsuario();
-		}
-		else{
-			numeroTipoUsuario = Integer.parseInt(tipoUsuario);
+			preCadastrarEstudante();
 		}
 
-		UsuarioDao usuarioDao = new UsuarioDao();
-		usuarioDao.cadastrarUsuario(login, senha, numeroTipoUsuario, idPessoa);
+		EstudanteDao estudanteDao = new EstudanteDao();
+		estudanteDao.cadastrarEstudante(matricula, curso, idPessoa);
 		ViewConsoleUtil.setMensagemOperacao("Cadastro realizado com sucesso");
 		selecionarOperacao();
 	}
@@ -96,16 +78,16 @@ public class UsuarioController {
 
 	
 	/**
-	 * listar sala de aula
+	 * listar estudante
 	 */
-	private void listarUsuario(){
+	private void listarEstudante(){
 		Scanner entrada = new Scanner(System.in);
 
 		ViewConsoleUtil.limparConsole();
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setBreadCrumb("Listar Usuário");
+		ViewConsoleUtil.setBreadCrumb("Listar Estudante");
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor informe o login do usuário:");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe a matricula do estudante:");
 		String filtro = entrada.nextLine();
 
 		try {
@@ -122,8 +104,8 @@ public class UsuarioController {
 	
 	private void buscar(String filtro) throws IOException, ParseException {
 
-		UsuarioDao dao = new UsuarioDao();
-		List<Usuario> resultado = dao.findByLogin(filtro);
+		EstudanteDao dao = new EstudanteDao();
+		List<Estudante> resultado = dao.findByMatricula(filtro);
 
 		ViewConsoleUtil.limparConsole();
 		ViewConsoleUtil.setDivisor();
@@ -133,9 +115,9 @@ public class UsuarioController {
 			selecionarOperacao();
 		} else {
 			ViewConsoleUtil.setTabelaHead("id", "Login", "Tipo de Usuário");
-			for (Usuario usuario : resultado) {
+			for (Estudante estudante : resultado) {
 				System.out.println("");
-				ViewConsoleUtil.setTabelaItem(String.valueOf(usuario.getId()), usuario.getLogin(), String.valueOf(TipoUsuario.get(usuario.getTipoUsuario())),
+				ViewConsoleUtil.setTabelaItem(String.valueOf(estudante.getId()), estudante.getMatricula(), estudante.getCurso(), estudante.getPessoa().getNome(),
 						"R - Remover/  B - Buscar / V - Voltar");
 			}
 
@@ -201,26 +183,26 @@ public class UsuarioController {
 		Scanner entrada = new Scanner(System.in);
 
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor informe o id do usuário que você deseja remover");
-		String idUsuario = entrada.nextLine();
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o id do estudante que você deseja remover");
+		String idEstudante = entrada.nextLine();
 
 		String regex = "\\d+";
-		if (!idUsuario.matches(regex)) {
+		if (!idEstudante.matches(regex)) {
 			ViewConsoleUtil.setMensagemErro("A opção informada deve ser um id");
 			preRemover();
 		} else
-			remover(Integer.parseInt(idUsuario));
+			remover(Integer.parseInt(idEstudante));
 	}
 	
 	private void remover(int id) throws IOException, ParseException {
 
-		UsuarioDao dao = new UsuarioDao();
-		Usuario objRemovido = dao.findById(id);
+		EstudanteDao dao = new EstudanteDao();
+		Estudante objRemovido = dao.findById(id);
 		if (objRemovido == null) {
 			ViewConsoleUtil.setMensagemErro("O registro informado " + id + " não foi encontrado.");
 			preRemover();
 		}
-		dao.remover(new Usuario(id));
+		dao.remover(new Estudante(id));
 		ViewConsoleUtil.setMensagemOperacao("Usuário removido com sucesso");
 		selecionarOperacao();
 	}

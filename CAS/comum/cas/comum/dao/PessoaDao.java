@@ -25,7 +25,7 @@ import cas.util.util.GenericDao;
 		 * @param cpf 
 		 * @param dataDataNascimento 
 		 */
-	public void cadastrarPessoa(String nome, Date dataDataNascimento, String cpf, String rg, String nomeMae, String nomePai, String endereco, String bairro, String cep, String login, String senha, int tipoUsuario){
+	public void cadastrarPessoa(String nome, Date dataDataNascimento, String cpf, String rg, String nomeMae, String nomePai, String endereco, String bairro, String cep){
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement(" INSERT INTO comum.pessoa (nome, cpf, registro_geral, nome_mae, nome_pai, endereco, bairro, cep, data_nascimento) " + 
@@ -55,7 +55,7 @@ import cas.util.util.GenericDao;
 	 * @param desc
 	 * @return
 	 */
-	public Integer findUltimoRegistroCadastrado(String cpf){
+	public Integer findPessoaByCpf(String cpf){
 		Connection con = getConnection();
 		
 		String sql = "SELECT id_pessoa FROM comum.pessoa WHERE cpf = ?";
