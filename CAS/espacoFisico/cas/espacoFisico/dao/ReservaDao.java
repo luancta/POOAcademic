@@ -69,6 +69,37 @@ public class ReservaDao extends GenericDao {
 			throw new Exception(e.getMessage());
 		}
 	}
+	
+	/**
+	 * Retorna reservas por codigo da turma
+	 * 
+	 * @param codTurma
+	 * @return
+	 * @throws Exception
+	 */
+	public List<Reserva> findByTurma(String codTurma) throws Exception {
+		List<Reserva> reservas = new ArrayList<Reserva>();
+		Connection con = getConnection();
+
+		String sql = "SELECT * FROM espaco_fisico.reserva "
+				+ "JOIN ensino.turma t USING (id_turma) "
+				+ "WHERE codigo like ?";
+
+		try {
+			PreparedStatement stm = con.prepareStatement(sql);
+			stm.setString(1, codTurma);
+
+			ResultSet rs = stm.executeQuery();
+
+			while (rs.next()) {
+				reservas.add(populaReserva(rs));
+			}
+
+			return reservas;
+		} catch (SQLException e) {
+			throw new Exception(e.getMessage());
+		}
+	}
 
 	/**
 	 * Salvar Reserva de aula informada
@@ -83,7 +114,7 @@ public class ReservaDao extends GenericDao {
 
 			pstmt.setBoolean(1, reserva.isUsaProjetor());
 			pstmt.setBoolean(2, reserva.isAtivo());
-			pstmt.setDate(3, reserva.getData());
+			pstmt.setObject(3, reserva.getData());
 			pstmt.setInt(3, reserva.getTurma() != null ? reserva.getTurma().getId() : 1);
 			pstmt.setInt(4, reserva.getLocalAula() != null ? reserva.getLocalAula().getId() : 1);
 

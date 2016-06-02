@@ -1,5 +1,8 @@
 package cas.espacoFisico.controller;
 
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Scanner;
 
@@ -93,7 +96,20 @@ public class ReservaController {
 	 * @param entrada
 	 */
 	private void informarData(Scanner entrada) {
-		// TODO LUCAS ESTA DESENVOLVENDO
+		ViewConsoleUtil.setMensagemOpcao("Por favor digite a Data (DD/MM/YYYY)");
+		String data = entrada.nextLine();
+		Date dataFormatada = null;
+		if (!data.isEmpty()) {
+			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+			try {
+				dataFormatada = new java.sql.Date(formato.parse(data).getTime());
+			} catch (ParseException e) {
+				ViewConsoleUtil.setMensagemErro("Por favor informe a data de acordo com o informado.");
+				informarData(entrada);
+			}
+		}
+
+		reserva.setData(dataFormatada);
 
 	}
 
@@ -321,42 +337,57 @@ public class ReservaController {
 	private void buscar(String filtro) throws NumberFormatException, Exception {
 
 		ReservaDao dao = new ReservaDao();
-		Reserva resultado = dao.findById(Integer.parseInt(filtro));
+		List<Reserva> resultado = dao.findByTurma(filtro);
 
 		ViewConsoleUtil.setDivisor();
 
-		/*
-		 * if (resultado.isEmpty()) { ViewConsoleUtil.setMensagemErro(
-		 * "Nenhum registro foi encontrado"); selecionarOperacao(); } else {
-		 * ViewConsoleUtil.setTabelaHead("id", "bloco", "capacidade", "sala",
-		 * "laboratório", "Operação"); System.out.println("");
-		 * ViewConsoleUtil.setTabelaItem(String.valueOf(resultado.getId()),
-		 * resultado.getBloco(), String.valueOf(resultado.getCapacidade()),
-		 * resultado.getSala() != null ? resultado.getSala().getNumero() : "",
-		 * resultado.getLaboratorio() != null ?
-		 * resultado.getLaboratorio().getNome() : "",
-		 * "R - Remover / B - Buscar / V - Voltar"); }
-		 * 
-		 * System.out.println(""); System.out.println("Total de " +
-		 * resultado.size() + " reserva de s encontrados.");
-		 * System.out.println(""); }
-		 * 
-		 * Scanner entrada = new Scanner(System.in);
-		 * 
-		 * ViewConsoleUtil.setMensagemOpcao(
-		 * "Por favor informe a operação desejada"); String operacao =
-		 * entrada.nextLine();
-		 * 
-		 * String regex = "\\d+"; if (!operacao.matches(regex)) operacao =
-		 * operacao.toUpperCase(); else { ViewConsoleUtil.setMensagemErro(
-		 * "A opção informada não pode ser um número"); buscar(filtro); }
-		 * 
-		 * switch (operacao) { case "R": preRemover(); break; case "B":
-		 * listarReservas(); break; case "V": selecionarOperacao(); break;
-		 * default: ViewConsoleUtil.setMensagemErro(
-		 * "Opção selecionada inexistente"); buscar(filtro); break; }
-		 */
+		if (resultado.isEmpty()) {
+			ViewConsoleUtil.setMensagemErro("Nenhum registro foi encontrado");
+			selecionarOperacao();
+		} else {
+			ViewConsoleUtil.setTabelaHead("id", "Usa Projetor", "Data", "Turma", "Local Aula", "Operação");
+			System.out.println("");
+			for (Reserva reserva : resultado) {
+				ViewConsoleUtil.setTabelaItem(String.valueOf(reserva.getId()), reserva.isUsaProjetor() ? "Sim" : "Não",
+						String.valueOf(reserva.getData()),
+						reserva.getTurma() != null ? reserva.getTurma().getCodigo() : "",
+						reserva.getLocalAula() != null ? reserva.getLocalAula().getBloco() : "",
+						"R - Remover / B - Buscar / V - Voltar");
+			}
+			System.out.println("");
+			System.out.println("Total de " + resultado.size() + " reserva de s encontrados.");
+			System.out.println("");
 
+		}
+
+		Scanner entrada = new Scanner(System.in);
+
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe a operação desejada");
+		String operacao = entrada.nextLine();
+
+		String regex = "\\d+";
+		if (!operacao.matches(regex))
+			operacao = operacao.toUpperCase();
+		else {
+			ViewConsoleUtil.setMensagemErro("A opção informada não pode ser um número");
+			buscar(filtro);
+		}
+
+		switch (operacao) {
+		case "R":
+			preRemover();
+			break;
+		case "B":
+			listarReservas();
+			break;
+		case "V":
+			selecionarOperacao();
+			break;
+		default:
+			ViewConsoleUtil.setMensagemErro("Opção selecionada inexistente");
+			buscar(filtro);
+			break;
+		}
 	}
 
 	/**
@@ -369,7 +400,7 @@ public class ReservaController {
 		Scanner entrada = new Scanner(System.in);
 
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor informe o id do reserva de  que você deseja remover");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o id da reserva a qual você deseja remover");
 		String idReserva = entrada.nextLine();
 
 		String regex = "\\d+";
@@ -397,7 +428,7 @@ public class ReservaController {
 		}
 
 		dao.remover(new Reserva(id));
-		ViewConsoleUtil.setMensagemOperacao("Reserva de  removido com sucesso");
+		ViewConsoleUtil.setMensagemOperacao("Reserva removida com sucesso");
 		selecionarOperacao();
 	}
 

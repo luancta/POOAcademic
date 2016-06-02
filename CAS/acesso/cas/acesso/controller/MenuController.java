@@ -29,7 +29,7 @@ public class MenuController {
 		System.out.println("6 - Gerenciar Laboratório");
 		System.out.println("7 - Gerenciar Local Aula");
 		System.out.println("8 - Gerenciar Estudante");
-		System.out.println("9 - Gerenciar Turma");
+		System.out.println("9 - Gerenciar Horário");
 		System.out.println("10 - Gerenciar Reserva");
 		System.out.println("11 - Gerenciar Disciplina");
 		System.out.println("12 - Gerenciar Docente");
@@ -44,6 +44,10 @@ public class MenuController {
 		case "2":
 			SalaController salaController = new SalaController();
 			salaController.selecionarOperacao();
+			break;
+		case "3":
+			TurmaController turmaController = new TurmaController();
+			turmaController.selecionarOperacao();
 			break;
 		case "4":
 			ProjetorController projetorController = new ProjetorController();
@@ -66,8 +70,6 @@ public class MenuController {
 			estudanteController.selecionarOperacao();
 			break;
 		case "9":
-			TurmaController turmaController = new TurmaController();
-			turmaController.selecionarOperacao();
 			break;
 		case "10":
 			ReservaController reservaController = new ReservaController();
