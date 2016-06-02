@@ -6,10 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 import cas.comum.dominio.Turno;
-import cas.espacoFisico.dao.SalaDao;
 import cas.util.util.GenericDao;
 
 /*
@@ -18,7 +16,7 @@ import cas.util.util.GenericDao;
 public class TurnoDAO extends GenericDao{
 	
 	//Busca, através do identificador, um turno cadastrado
-	public Turno findTurnobyId(Integer id){
+	public Turno findTurnobyId(Integer id) throws Exception{
 		List<Turno> turnos = new ArrayList<Turno>();
 		Connection con = getConnection();
 		
@@ -39,12 +37,12 @@ public class TurnoDAO extends GenericDao{
 			else
 				return new Turno();
 		}catch (SQLException e){
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 	
 	//Busca um turno pela descrição
-	public Turno findTurnobyDescricao(String desc){
+	public Turno findTurnobyDescricao(String desc) throws Exception{
 		List<Turno> turnos = new ArrayList<Turno>();
 		Connection con = getConnection();
 		
@@ -65,12 +63,12 @@ public class TurnoDAO extends GenericDao{
 			else
 				return new Turno();
 		}catch (SQLException e){
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	//Busca todos os turnos cadastrados
-	public List<Turno> findTurnos(){
+	public List<Turno> findTurnos() throws Exception{
 		List<Turno> turnos = new ArrayList<Turno>();
 		Connection con = getConnection();
 		
@@ -90,7 +88,7 @@ public class TurnoDAO extends GenericDao{
 			else
 				return null;
 		}catch (SQLException e){
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 	

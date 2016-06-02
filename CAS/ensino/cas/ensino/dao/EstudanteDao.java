@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cas.acesso.dominio.Usuario;
 import cas.comum.dominio.Pessoa;
 import cas.ensino.dominio.Estudante;
 import cas.util.util.GenericDao;
@@ -15,7 +14,7 @@ import cas.util.util.GenericDao;
 public class EstudanteDao extends GenericDao{
 
 	
-	public void cadastrarEstudante(String matricula, String curso, int idPessoa){
+	public void cadastrarEstudante(String matricula, String curso, int idPessoa) throws Exception{
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement(" INSERT INTO ensino.estudante (matricula, curso, id_pessoa) " +  
@@ -29,11 +28,11 @@ public class EstudanteDao extends GenericDao{
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 	
-	public List<Estudante> findByMatricula(String matricula) {
+	public List<Estudante> findByMatricula(String matricula) throws Exception {
 		List<Estudante> estudantes = new ArrayList<Estudante>();
 		Connection con = getConnection();
 
@@ -53,7 +52,7 @@ public class EstudanteDao extends GenericDao{
 
 			return estudantes;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 	
@@ -68,7 +67,7 @@ public class EstudanteDao extends GenericDao{
 		return estudante;
 	}
 	
-	public Estudante findById(int id) {
+	public Estudante findById(int id) throws Exception {
 		List<Estudante> estudantes = new ArrayList<Estudante>();
 		Connection con = getConnection();
 
@@ -86,11 +85,11 @@ public class EstudanteDao extends GenericDao{
 
 			return estudantes.isEmpty() ? new Estudante() : estudantes.get(0);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 	
-	public void remover(Estudante estudante) {
+	public void remover(Estudante estudante) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("DELETE FROM ensino.estudante " + "WHERE id_estudante = ? ");
@@ -101,7 +100,7 @@ public class EstudanteDao extends GenericDao{
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 }

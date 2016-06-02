@@ -1,7 +1,5 @@
 package cas.espacoFisico.controller;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,11 +18,9 @@ public class SalaController {
 
 	/**
 	 * Selecionar operação a ser realizada
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	public void selecionarOperacao() throws IOException, ParseException {
+	public void selecionarOperacao() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -59,11 +55,9 @@ public class SalaController {
 
 	/**
 	 * Pre cadastrar sala de aula
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void preCadastrarSala() throws IOException, ParseException {
+	private void preCadastrarSala() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -88,10 +82,9 @@ public class SalaController {
 	 * Cadastrar sala de aula
 	 * 
 	 * @param numero
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void cadastrarSala(String numero) throws IOException, ParseException {
+	private void cadastrarSala(String numero) throws Exception {
 		SalaDao dao = new SalaDao();
 		dao.salvar(new Sala(numero));
 		ViewConsoleUtil.setMensagemOperacao("Cadastro realizado com sucesso");
@@ -100,11 +93,9 @@ public class SalaController {
 
 	/**
 	 * Listar sala de aula
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void listarSalas() throws IOException, ParseException {
+	private void listarSalas() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -123,10 +114,9 @@ public class SalaController {
 	 * Buscar e listar sala de aula
 	 * 
 	 * @param numero
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void buscar(String filtro) throws IOException, ParseException {
+	private void buscar(String filtro) throws Exception {
 
 		SalaDao dao = new SalaDao();
 		List<Sala> resultado = dao.findByNumero(filtro);
@@ -183,12 +173,9 @@ public class SalaController {
 
 	/**
 	 * Pre remover sala de aula
-	 * 
-	 * @throws NumberFormatException
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void preRemover() throws NumberFormatException, IOException, ParseException {
+	private void preRemover() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -209,10 +196,9 @@ public class SalaController {
 	 * Remover Sala de aula
 	 * 
 	 * @param id
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void remover(int id) throws IOException, ParseException {
+	private void remover(int id) throws Exception {
 
 		SalaDao dao = new SalaDao();
 		Sala objRemovido = dao.findById(id);
@@ -228,11 +214,9 @@ public class SalaController {
 
 	/**
 	 * Voltar para aréa administrativa
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void voltar() throws ParseException, IOException {
+	private void voltar() throws Exception {
 
 		MenuController menu = new MenuController();
 		menu.getTelaMenu();

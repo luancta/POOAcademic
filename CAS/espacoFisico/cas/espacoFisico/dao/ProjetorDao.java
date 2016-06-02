@@ -18,8 +18,9 @@ public class ProjetorDao extends GenericDao {
 	 * 
 	 * @param desc
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<Projetor> findAll() {
+	public List<Projetor> findAll() throws Exception {
 		List<Projetor> projetors = new ArrayList<Projetor>();
 		Connection con = getConnection();
 
@@ -36,7 +37,7 @@ public class ProjetorDao extends GenericDao {
 
 			return projetors;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -45,8 +46,9 @@ public class ProjetorDao extends GenericDao {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	public Projetor findById(int id) {
+	public Projetor findById(int id) throws Exception {
 		List<Projetor> projetors = new ArrayList<Projetor>();
 		Connection con = getConnection();
 
@@ -64,7 +66,7 @@ public class ProjetorDao extends GenericDao {
 
 			return projetors.isEmpty() ? new Projetor() : projetors.get(0);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -73,8 +75,9 @@ public class ProjetorDao extends GenericDao {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<Projetor> findByTombo(String tombo) {
+	public List<Projetor> findByTombo(String tombo) throws Exception {
 		List<Projetor> projetors = new ArrayList<Projetor>();
 		Connection con = getConnection();
 
@@ -92,15 +95,16 @@ public class ProjetorDao extends GenericDao {
 
 			return projetors;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	/**
 	 * Salvar Projetor de aula informada
 	 * @param projetor
+	 * @throws Exception 
 	 */
-	public void salvar(Projetor projetor) {
+	public void salvar(Projetor projetor) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("INSERT INTO espaco_fisico.projetor " + "(tombo, marca) " + "VALUES (?,?)");
@@ -112,15 +116,16 @@ public class ProjetorDao extends GenericDao {
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	/**
 	 * Remover Projetor de aula informada
 	 * @param projetor
+	 * @throws Exception 
 	 */
-	public void remover(Projetor projetor) {
+	public void remover(Projetor projetor) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("DELETE FROM espaco_fisico.projetor " + "WHERE id_projetor = ? ");
@@ -131,7 +136,7 @@ public class ProjetorDao extends GenericDao {
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 

@@ -1,7 +1,5 @@
 package cas.espacoFisico.controller;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,11 +18,9 @@ public class AplicativoController {
 
 	/**
 	 * Selecionar operação a ser realizada
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	public void selecionarOperacao() throws IOException, ParseException {
+	public void selecionarOperacao() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -59,11 +55,9 @@ public class AplicativoController {
 
 	/**
 	 * Pre cadastrar aplicativo de aula
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void preCadastrarAplicativo() throws IOException, ParseException {
+	private void preCadastrarAplicativo() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -88,10 +82,9 @@ public class AplicativoController {
 	 * Cadastrar aplicativo de aula
 	 * 
 	 * @param nome
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void cadastrarAplicativo(String nome) throws IOException, ParseException {
+	private void cadastrarAplicativo(String nome) throws Exception {
 		AplicativoDao dao = new AplicativoDao();
 		dao.salvar(new Aplicativo(nome));
 		ViewConsoleUtil.setMensagemOperacao("Cadastro realizado com sucesso");
@@ -100,11 +93,9 @@ public class AplicativoController {
 
 	/**
 	 * Listar aplicativo de aula
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void listarAplicativos() throws IOException, ParseException {
+	private void listarAplicativos() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -122,10 +113,9 @@ public class AplicativoController {
 	 * Buscar e listar aplicativo de aula
 	 * 
 	 * @param nome
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void buscar(String filtro) throws IOException, ParseException {
+	private void buscar(String filtro) throws Exception {
 
 		AplicativoDao dao = new AplicativoDao();
 		List<Aplicativo> resultado = dao.findByNome(filtro);
@@ -182,12 +172,9 @@ public class AplicativoController {
 
 	/**
 	 * Pre remover aplicativo de aula
-	 * 
-	 * @throws NumberFormatException
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void preRemover() throws NumberFormatException, IOException, ParseException {
+	private void preRemover() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -207,10 +194,9 @@ public class AplicativoController {
 	 * Remover Aplicativo de aula
 	 * 
 	 * @param id
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void remover(int id) throws IOException, ParseException {
+	private void remover(int id) throws Exception {
 
 		AplicativoDao dao = new AplicativoDao();
 		Aplicativo objRemovido = dao.findById(id);
@@ -225,11 +211,9 @@ public class AplicativoController {
 
 	/**
 	 * Voltar para aréa administrativa
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void voltar() throws ParseException, IOException {
+	private void voltar() throws Exception {
 
 		MenuController menu = new MenuController();
 		menu.getTelaMenu();

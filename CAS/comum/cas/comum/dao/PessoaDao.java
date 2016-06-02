@@ -6,7 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 
-import cas.acesso.dao.UsuarioDao;
 import cas.comum.dominio.Pessoa;
 import cas.util.util.GenericDao;
 
@@ -25,8 +24,9 @@ import cas.util.util.GenericDao;
 		 * @param rg 
 		 * @param cpf 
 		 * @param dataDataNascimento 
+		 * @throws Exception 
 		 */
-	public void cadastrarPessoa(String nome, Date dataDataNascimento, String cpf, String rg, String nomeMae, String nomePai, String endereco, String bairro, String cep){
+	public void cadastrarPessoa(String nome, Date dataDataNascimento, String cpf, String rg, String nomeMae, String nomePai, String endereco, String bairro, String cep) throws Exception{
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement(" INSERT INTO comum.pessoa (nome, cpf, registro_geral, nome_mae, nome_pai, endereco, bairro, cep, data_nascimento) " + 
@@ -46,7 +46,7 @@ import cas.util.util.GenericDao;
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	
 	}
@@ -55,8 +55,9 @@ import cas.util.util.GenericDao;
 	 * Retorna Pessoa por CPF
 	 * @param desc
 	 * @return
+	 * @throws Exception 
 	 */
-	public Pessoa findPessoaByCpf(String cpf){
+	public Pessoa findPessoaByCpf(String cpf) throws Exception{
 		Connection con = getConnection();
 		
 		String sql = "SELECT * FROM comum.pessoa WHERE cpf = ? ";
@@ -73,7 +74,7 @@ import cas.util.util.GenericDao;
 				return null;
 			
 		}catch (SQLException e){
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 	

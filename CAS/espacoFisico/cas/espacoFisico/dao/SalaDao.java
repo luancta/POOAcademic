@@ -17,8 +17,9 @@ public class SalaDao extends GenericDao {
 	 * 
 	 * @param desc
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<Sala> findAll() {
+	public List<Sala> findAll() throws Exception {
 		List<Sala> salas = new ArrayList<Sala>();
 		Connection con = getConnection();
 
@@ -35,7 +36,7 @@ public class SalaDao extends GenericDao {
 
 			return salas;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -44,8 +45,9 @@ public class SalaDao extends GenericDao {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	public Sala findById(int id) {
+	public Sala findById(int id) throws Exception {
 		List<Sala> salas = new ArrayList<Sala>();
 		Connection con = getConnection();
 
@@ -63,7 +65,7 @@ public class SalaDao extends GenericDao {
 
 			return salas.isEmpty() ? new Sala() : salas.get(0);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -72,8 +74,9 @@ public class SalaDao extends GenericDao {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<Sala> findByNumero(String numero) {
+	public List<Sala> findByNumero(String numero) throws Exception {
 		List<Sala> salas = new ArrayList<Sala>();
 		Connection con = getConnection();
 
@@ -91,15 +94,16 @@ public class SalaDao extends GenericDao {
 
 			return salas;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	/**
 	 * Salvar Sala de aula informada
 	 * @param sala
+	 * @throws Exception 
 	 */
-	public void salvar(Sala sala) {
+	public void salvar(Sala sala) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("INSERT INTO espaco_fisico.sala " + "(numero) " + "VALUES (?)");
@@ -110,15 +114,16 @@ public class SalaDao extends GenericDao {
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	/**
 	 * Remover Sala de aula informada
 	 * @param sala
+	 * @throws Exception 
 	 */
-	public void remover(Sala sala) {
+	public void remover(Sala sala) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("DELETE FROM espaco_fisico.sala " + "WHERE id_sala = ? ");
@@ -129,7 +134,7 @@ public class SalaDao extends GenericDao {
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 

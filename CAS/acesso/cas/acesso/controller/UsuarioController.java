@@ -16,9 +16,9 @@ public class UsuarioController {
 
 	/**
 	 * Selecionar operação a ser realizada
-	 * @throws ParseException 
+	 * @throws Exception 
 	 */
-	public void selecionarOperacao() throws ParseException{
+	public void selecionarOperacao() throws Exception{
 		
 		Scanner entrada = new Scanner(System.in);
 		
@@ -45,9 +45,9 @@ public class UsuarioController {
 	
 	/**
 	 * Pre cadastrar usuário
-	 * @throws ParseException 
+	 * @throws Exception 
 	 */
-	private void preCadastrarUsuario() throws ParseException{
+	private void preCadastrarUsuario() throws Exception{
 		Scanner entrada = new Scanner(System.in);
 		
 		PessoaController pessoaController = new PessoaController();
@@ -94,8 +94,9 @@ public class UsuarioController {
 	
 	/**
 	 * listar sala de aula
+	 * @throws Exception 
 	 */
-	private void listarUsuario(){
+	private void listarUsuario() throws Exception{
 		Scanner entrada = new Scanner(System.in);
 
 		ViewConsoleUtil.limparConsole();
@@ -117,7 +118,7 @@ public class UsuarioController {
 		
 	}
 	
-	private void buscar(String filtro) throws IOException, ParseException {
+	private void buscar(String filtro) throws Exception {
 
 		UsuarioDao dao = new UsuarioDao();
 		List<Usuario> resultado = dao.findByLogin(filtro);
@@ -172,7 +173,7 @@ public class UsuarioController {
 
 	}
 	
-	private void listarUsuarios() throws IOException, ParseException {
+	private void listarUsuarios() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -188,12 +189,9 @@ public class UsuarioController {
 	
 	/**
 	 * Pre remover usuario de aula
-	 * 
-	 * @throws NumberFormatException
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void preRemover() throws NumberFormatException, IOException, ParseException {
+	private void preRemover() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -209,7 +207,7 @@ public class UsuarioController {
 			remover(Integer.parseInt(idUsuario));
 	}
 	
-	private void remover(int id) throws IOException, ParseException {
+	private void remover(int id) throws Exception {
 
 		UsuarioDao dao = new UsuarioDao();
 		Usuario objRemovido = dao.findById(id);

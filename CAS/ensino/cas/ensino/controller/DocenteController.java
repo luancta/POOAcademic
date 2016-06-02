@@ -1,7 +1,5 @@
 package cas.ensino.controller;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -17,11 +15,9 @@ import cas.util.util.ViewConsoleUtil;
 public class DocenteController {
 	/**
 	 * Selecionar operação a ser realizada
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	public void selecionarOperacao() throws IOException, ParseException {
+	public void selecionarOperacao() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -55,11 +51,9 @@ public class DocenteController {
 
 	/**
 	 * Pre cadastrar Docente
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void preCadastrarDocente() throws IOException, ParseException {
+	private void preCadastrarDocente() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -121,10 +115,9 @@ public class DocenteController {
 	 * Cadastrar Docente
 	 * 
 	 * @param nome
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void cadastrarDocente(String matricula, Pessoa pessoa) throws IOException, ParseException {
+	private void cadastrarDocente(String matricula, Pessoa pessoa) throws Exception {
 		DocenteDao dao = new DocenteDao();
 		Docente docente = new Docente();
 		docente.setMatricula(matricula);
@@ -136,11 +129,9 @@ public class DocenteController {
 
 	/**
 	 * Listar Docente
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void listarDocentes() throws IOException, ParseException {
+	private void listarDocentes() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -157,10 +148,9 @@ public class DocenteController {
 	 * Buscar e listar Docente
 	 * 
 	 * @param nome
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void buscar(String filtro) throws IOException, ParseException {
+	private void buscar(String filtro) throws Exception {
 
 		DocenteDao dao = new DocenteDao();
 		List<Docente> resultado = dao.findByNomeMatricula(filtro);
@@ -216,12 +206,9 @@ public class DocenteController {
 
 	/**
 	 * Pre remover Docente
-	 * 
-	 * @throws NumberFormatException
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void preRemover() throws NumberFormatException, IOException, ParseException {
+	private void preRemover() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -241,10 +228,9 @@ public class DocenteController {
 	 * Remover Docente
 	 * 
 	 * @param id
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void remover(int id) throws IOException, ParseException {
+	private void remover(int id) throws Exception {
 
 		DocenteDao dao = new DocenteDao();
 		Docente objRemovido = dao.findById(id);
@@ -259,11 +245,9 @@ public class DocenteController {
 
 	/**
 	 * Voltar para aréa administrativa
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void voltar() throws ParseException, IOException {
+	private void voltar() throws Exception {
 
 		MenuController menu = new MenuController();
 		menu.getTelaMenu();

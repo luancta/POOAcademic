@@ -1,18 +1,20 @@
 package cas.acesso.controller;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 import cas.acesso.dao.UsuarioDao;
 import cas.acesso.dominio.Usuario;
+import cas.util.util.ViewConsoleUtil;
 
 //import cas.comum.gui.MenuFrame;
 
 public class AutenticacaoController {
-	public void getTelaInicialSistema () throws ParseException, IOException{
+	
+	private boolean autenticado = false;
+	
+	public void getTelaInicialSistema () throws Exception{
 		Scanner entrada = new Scanner(System.in);
 		Scanner entrada2 = new Scanner(System.in);
 		
@@ -32,18 +34,22 @@ public class AutenticacaoController {
 	 * Realizar autenticação das informações para entrar no sistema
 	 * @param login
 	 * @param senha
-	 * @throws ParseException 
-	 * @throws IOException 
+	 * @throws Exception 
 	 */
-	public void autenticar(String login, String senha) throws ParseException, IOException{
+	public void autenticar(String login, String senha) throws Exception{
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		UsuarioDao dao = new UsuarioDao();
 		usuarios = dao.findUsuariobyLoginSenha(login, senha);
 		if (!usuarios.isEmpty()) {
+			autenticado = true;
 			limpaTela();
 			MenuController menuController = new MenuController();
 			menuController.getTelaMenu();
 		}else{
+			autenticado = false;
+			ViewConsoleUtil.limparConsole();
+			ViewConsoleUtil.setMensagemErro("Usuário ou senha inválido.");
+			getTelaInicialSistema();
 
 		}
 				
@@ -54,4 +60,12 @@ public class AutenticacaoController {
               System.out.println('\n');
         }
     }
+
+	public boolean isAutenticado() {
+		return autenticado;
+	}
+
+	public void setAutenticado(boolean autenticado) {
+		this.autenticado = autenticado;
+	}
 }

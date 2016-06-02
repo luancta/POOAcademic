@@ -1,6 +1,5 @@
 package cas.comum.controller;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
@@ -13,9 +12,9 @@ public class PessoaController {
 	
 	/**
 	 * Pre cadastrar pessoa
-	 * @throws ParseException 
+	 * @throws Exception 
 	 */
-	public Integer cadastrarPessoa() throws ParseException{
+	public Integer cadastrarPessoa() throws Exception{
 		Scanner entrada = new Scanner(System.in);
 		
 		System.out.println("####### Cadastrar Pessoa #######");

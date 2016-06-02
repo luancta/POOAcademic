@@ -1,7 +1,5 @@
 package cas.espacoFisico.controller;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,11 +19,9 @@ public class ProjetorController {
 
 	/**
 	 * Selecionar operação a ser realizada
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	public void selecionarOperacao() throws IOException, ParseException {
+	public void selecionarOperacao() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -60,11 +56,9 @@ public class ProjetorController {
 
 	/**
 	 * Pre cadastrar projetor de aula
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void preCadastrarProjetor() throws IOException, ParseException {
+	private void preCadastrarProjetor() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 		Projetor projetor = new Projetor();
@@ -127,10 +121,9 @@ public class ProjetorController {
 	 * Cadastrar projetor de aula
 	 * 
 	 * @param tombo
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void cadastrarProjetor(Projetor projetor) throws IOException, ParseException {
+	private void cadastrarProjetor(Projetor projetor) throws Exception {
 		ProjetorDao dao = new ProjetorDao();
 		dao.salvar(projetor);
 		ViewConsoleUtil.setMensagemOperacao("Cadastro realizado com sucesso");
@@ -139,11 +132,9 @@ public class ProjetorController {
 
 	/**
 	 * Listar projetor de aula
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void listarProjetors() throws IOException, ParseException {
+	private void listarProjetors() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -161,10 +152,9 @@ public class ProjetorController {
 	 * Buscar e listar projetor de aula
 	 * 
 	 * @param tombo
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void buscar(String filtro) throws IOException, ParseException {
+	private void buscar(String filtro) throws Exception {
 
 		ProjetorDao dao = new ProjetorDao();
 		List<Projetor> resultado = dao.findByTombo(filtro);
@@ -220,12 +210,9 @@ public class ProjetorController {
 
 	/**
 	 * Pre remover projetor de aula
-	 * 
-	 * @throws NumberFormatException
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void preRemover() throws NumberFormatException, IOException, ParseException {
+	private void preRemover() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -245,10 +232,9 @@ public class ProjetorController {
 	 * Remover Projetor de aula
 	 * 
 	 * @param id
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void remover(int id) throws IOException, ParseException {
+	private void remover(int id) throws Exception {
 
 		ProjetorDao dao = new ProjetorDao();
 		Projetor objRemovido = dao.findById(id);
@@ -264,11 +250,9 @@ public class ProjetorController {
 
 	/**
 	 * Voltar para aréa administrativa
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void voltar() throws ParseException, IOException {
+	private void voltar() throws Exception {
 
 		MenuController menu = new MenuController();
 		menu.getTelaMenu();

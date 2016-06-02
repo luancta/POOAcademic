@@ -1,21 +1,14 @@
 package cas.acesso.dao;
 
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
-import cas.acesso.dominio.TipoUsuario;
 import cas.acesso.dominio.Usuario;
-import cas.espacoFisico.dao.LaboratorioDao;
-import cas.espacoFisico.dominio.Laboratorio;
 import cas.util.util.GenericDao;
-import cas.util.util.ViewConsoleUtil;
 
 public class UsuarioDao extends GenericDao {
 	
@@ -23,8 +16,9 @@ public class UsuarioDao extends GenericDao {
 	 * Retorna todos usuarios
 	 * @param desc
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<Usuario> findAll(){
+	public List<Usuario> findAll() throws Exception{
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 		Connection con = getConnection();
 		
@@ -41,7 +35,7 @@ public class UsuarioDao extends GenericDao {
 			
 			return usuarios;
 		}catch (SQLException e){
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 	
@@ -49,8 +43,9 @@ public class UsuarioDao extends GenericDao {
 		 * Retorna usuario por login
 		 * @param desc
 		 * @return
+		 * @throws Exception 
 		 */
-		public List<Usuario> findUsuariobyLoginSenha(String login, String senha){
+		public List<Usuario> findUsuariobyLoginSenha(String login, String senha) throws Exception{
 			List<Usuario> usuarios = new ArrayList<Usuario>();
 			Connection con = getConnection();
 			
@@ -69,7 +64,7 @@ public class UsuarioDao extends GenericDao {
 				
 				return usuarios;
 			}catch (SQLException e){
-				throw new RuntimeException(e);
+				throw new Exception(e.getMessage());
 			}
 		}
 		
@@ -88,7 +83,7 @@ public class UsuarioDao extends GenericDao {
 			return usuario;
 		}
 		
-		public void cadastrarUsuario(String login, String senha, int tipoUsuario, int idPessoa){
+		public void cadastrarUsuario(String login, String senha, int tipoUsuario, int idPessoa) throws Exception{
 			try {
 				PreparedStatement pstmt = getConnection()
 						.prepareStatement(" INSERT INTO acesso.usuario (login, senha, tipo_usuario, id_pessoa) " +  
@@ -103,11 +98,11 @@ public class UsuarioDao extends GenericDao {
 				pstmt.close();
 
 			} catch (SQLException e) {
-				throw new RuntimeException(e);
+				throw new Exception(e.getMessage());
 			}
 		}
 		
-		public List<Usuario> findByLogin(String nome) {
+		public List<Usuario> findByLogin(String nome) throws Exception {
 			List<Usuario> usuarios = new ArrayList<Usuario>();
 			Connection con = getConnection();
 
@@ -125,12 +120,12 @@ public class UsuarioDao extends GenericDao {
 
 				return usuarios;
 			} catch (SQLException e) {
-				throw new RuntimeException(e);
+				throw new Exception(e.getMessage());
 			}
 		}
 		
 
-		public void remover(Usuario usuario) {
+		public void remover(Usuario usuario) throws Exception {
 			try {
 				PreparedStatement pstmt = getConnection()
 						.prepareStatement("DELETE FROM acesso.usuario " + "WHERE id_usuario = ? ");
@@ -141,11 +136,11 @@ public class UsuarioDao extends GenericDao {
 				pstmt.close();
 
 			} catch (SQLException e) {
-				throw new RuntimeException(e);
+				throw new Exception(e.getMessage());
 			}
 		}
 		
-		public Usuario findById(int id) {
+		public Usuario findById(int id) throws Exception {
 			List<Usuario> usuarios = new ArrayList<Usuario>();
 			Connection con = getConnection();
 
@@ -163,7 +158,7 @@ public class UsuarioDao extends GenericDao {
 
 				return usuarios.isEmpty() ? new Usuario() : usuarios.get(0);
 			} catch (SQLException e) {
-				throw new RuntimeException(e);
+				throw new Exception(e.getMessage());
 			}
 		}
 }

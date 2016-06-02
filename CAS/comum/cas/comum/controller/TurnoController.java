@@ -9,7 +9,7 @@ import cas.comum.dominio.Turno;
 
 public class TurnoController {
 
-	public void selecionarOperacao(){
+	public void selecionarOperacao() throws Exception{
 		
 		Scanner entrada = new Scanner(System.in);
 		
@@ -37,8 +37,9 @@ public class TurnoController {
 	
 	/**
 	 * Pre cadastrar sala de aula
+	 * @throws Exception 
 	 */
-	private void preCadastrarTurno(){
+	private void preCadastrarTurno() throws Exception{
 		Scanner entrada = new Scanner(System.in);
 		
 		System.out.println("####### Cadastrar Turno #######");
@@ -61,8 +62,9 @@ public class TurnoController {
 	/**
 	 * Cadastrar sala de aula
 	 * @param descricao
+	 * @throws Exception 
 	 */
-	private void cadastrarTurno(String descricao){
+	private void cadastrarTurno(String descricao) throws Exception{
 		TurnoDAO dao = new TurnoDAO();
 		dao.save("INSERT INTO comum.turno "
 				+ "(descricao) "
@@ -73,7 +75,7 @@ public class TurnoController {
 	}
 	
 	//Lista de Turnos
-	private void listarTurnos(){
+	private void listarTurnos() throws Exception{
 		TurnoDAO dao = new TurnoDAO();
 		List<Turno> turnos = new ArrayList<Turno>();
 		int count = 0;
@@ -91,7 +93,7 @@ public class TurnoController {
 		}
 	}
 	
-	private void preRemoverTurno(){
+	private void preRemoverTurno() throws Exception{
 		Scanner entrada = new Scanner(System.in);
 		
 		System.out.println("####### Remover Turno #######");
@@ -110,7 +112,7 @@ public class TurnoController {
 		}
 	}
 	
-	private void removerTurno(String desc){
+	private void removerTurno(String desc) throws Exception{
 		TurnoDAO dao = new TurnoDAO();
 		
 		String sql = "DELETE FROM comum.turno WHERE descricao = ?";

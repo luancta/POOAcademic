@@ -1,7 +1,5 @@
 package cas.espacoFisico.controller;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -26,11 +24,9 @@ public class LaboratorioController {
 
 	/**
 	 * Selecionar operação a ser realizada
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	public void selecionarOperacao() throws IOException, ParseException {
+	public void selecionarOperacao() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -69,11 +65,9 @@ public class LaboratorioController {
 
 	/**
 	 * Pre cadastrar laboratorio de aula
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void preCadastrarLaboratorio() throws IOException, ParseException {
+	private void preCadastrarLaboratorio() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -98,10 +92,9 @@ public class LaboratorioController {
 	 * Cadastrar laboratorio de aula
 	 * 
 	 * @param nome
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void cadastrarLaboratorio(String nome) throws IOException, ParseException {
+	private void cadastrarLaboratorio(String nome) throws Exception {
 		LaboratorioDao dao = new LaboratorioDao();
 		dao.salvar(new Laboratorio(nome));
 		ViewConsoleUtil.setMensagemOperacao("Cadastro realizado com sucesso");
@@ -110,11 +103,9 @@ public class LaboratorioController {
 
 	/**
 	 * Listar laboratorio de aula
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void listarLaboratorios() throws IOException, ParseException {
+	private void listarLaboratorios() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -132,10 +123,9 @@ public class LaboratorioController {
 	 * Buscar e listar laboratorio de aula
 	 * 
 	 * @param nome
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void buscar(String filtro) throws IOException, ParseException {
+	private void buscar(String filtro) throws Exception {
 
 		LaboratorioDao dao = new LaboratorioDao();
 		List<Laboratorio> resultado = dao.findByNome(filtro);
@@ -196,12 +186,9 @@ public class LaboratorioController {
 
 	/**
 	 * Pre remover laboratorio de aula
-	 * 
-	 * @throws NumberFormatException
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void preRemover() throws NumberFormatException, IOException, ParseException {
+	private void preRemover() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -221,10 +208,9 @@ public class LaboratorioController {
 	 * Remover Laboratorio de aula
 	 * 
 	 * @param id
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void remover(int id) throws IOException, ParseException {
+	private void remover(int id) throws Exception {
 
 		LaboratorioDao dao = new LaboratorioDao();
 		Laboratorio objRemovido = dao.findById(id);
@@ -239,11 +225,9 @@ public class LaboratorioController {
 
 	/**
 	 * Listar aplicativo de aula
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void listarAplicativos() throws IOException, ParseException {
+	private void listarAplicativos() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -261,10 +245,9 @@ public class LaboratorioController {
 	 * Buscar e listar aplicativo de aula
 	 * 
 	 * @param nome
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void buscarAplicativo(String filtro) throws IOException, ParseException {
+	private void buscarAplicativo(String filtro) throws Exception {
 
 		AplicativoDao dao = new AplicativoDao();
 		List<Aplicativo> resultado = dao.findByNome(filtro);
@@ -290,10 +273,9 @@ public class LaboratorioController {
 
 	/**
 	 * Informar aplicativos para laboratorio
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void informarAplicativosLaboratorio() throws IOException, ParseException {
+	private void informarAplicativosLaboratorio() throws Exception {
 
 		laboratorioAplicativo = new LaboratorioAplicativo();
 		SelecionarLaboratorio();
@@ -304,10 +286,9 @@ public class LaboratorioController {
 
 	/**
 	 * Selecionar aplicativo
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void selecionarAplicativo() throws IOException, ParseException {
+	private void selecionarAplicativo() throws Exception {
 
 		listarAplicativos();
 		Scanner entrada = new Scanner(System.in);
@@ -333,11 +314,9 @@ public class LaboratorioController {
 
 	/**
 	 * Selecionar laboratorio para associar a aplicativo
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void SelecionarLaboratorio() throws IOException, ParseException {
+	private void SelecionarLaboratorio() throws Exception {
 
 		LaboratorioDao dao = new LaboratorioDao();
 		Scanner entrada = new Scanner(System.in);
@@ -390,10 +369,9 @@ public class LaboratorioController {
 	 * Cadastrar Aplicativo laboratorio
 	 * 
 	 * @param nome
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void cadastrarAplicativoLaboratorio() throws IOException, ParseException {
+	private void cadastrarAplicativoLaboratorio() throws Exception {
 		LaboratorioAplicativoDao dao = new LaboratorioAplicativoDao();
 		LaboratorioAplicativo laboratorioAplicativoPersistido = dao.findByLabApl(
 				laboratorioAplicativo.getLaboratorio().getId(), laboratorioAplicativo.getAplicativo().getId());
@@ -409,11 +387,9 @@ public class LaboratorioController {
 
 	/**
 	 * Voltar para aréa administrativa
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void voltar() throws ParseException, IOException {
+	private void voltar() throws Exception {
 
 		MenuController menu = new MenuController();
 		menu.getTelaMenu();

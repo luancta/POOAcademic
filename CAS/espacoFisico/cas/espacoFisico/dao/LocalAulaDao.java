@@ -17,8 +17,9 @@ public class LocalAulaDao extends GenericDao {
 	 * 
 	 * @param desc
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<LocalAula> findAll() {
+	public List<LocalAula> findAll() throws Exception {
 		List<LocalAula> localAulas = new ArrayList<LocalAula>();
 		Connection con = getConnection();
 
@@ -35,7 +36,7 @@ public class LocalAulaDao extends GenericDao {
 
 			return localAulas;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -44,8 +45,9 @@ public class LocalAulaDao extends GenericDao {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	public LocalAula findById(int id) {
+	public LocalAula findById(int id) throws Exception {
 		List<LocalAula> localAulas = new ArrayList<LocalAula>();
 		Connection con = getConnection();
 
@@ -63,7 +65,7 @@ public class LocalAulaDao extends GenericDao {
 
 			return localAulas.isEmpty() ? new LocalAula() : localAulas.get(0);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -72,8 +74,9 @@ public class LocalAulaDao extends GenericDao {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<LocalAula> findByBloco(String bloco) {
+	public List<LocalAula> findByBloco(String bloco) throws Exception {
 		List<LocalAula> localAulas = new ArrayList<LocalAula>();
 		Connection con = getConnection();
 
@@ -91,7 +94,7 @@ public class LocalAulaDao extends GenericDao {
 
 			return localAulas;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -99,8 +102,9 @@ public class LocalAulaDao extends GenericDao {
 	 * Salvar LocalAula de aula informada
 	 * 
 	 * @param localAula
+	 * @throws Exception 
 	 */
-	public void salvar(LocalAula localAula) {
+	public void salvar(LocalAula localAula) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection().prepareStatement("INSERT INTO espaco_fisico.local_aula "
 					+ " (bloco, capacidade, id_sala, id_laboratorio) " + " VALUES (?,?,?,?)");
@@ -114,7 +118,7 @@ public class LocalAulaDao extends GenericDao {
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -122,8 +126,9 @@ public class LocalAulaDao extends GenericDao {
 	 * Remover LocalAula de aula informada
 	 * 
 	 * @param localAula
+	 * @throws Exception 
 	 */
-	public void remover(LocalAula localAula) {
+	public void remover(LocalAula localAula) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("DELETE FROM espaco_fisico.local_aula " + "WHERE id_local_aula = ? ");
@@ -134,7 +139,7 @@ public class LocalAulaDao extends GenericDao {
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -143,9 +148,9 @@ public class LocalAulaDao extends GenericDao {
 	 * 
 	 * @param rs
 	 * @return
-	 * @throws SQLException
+	 * @throws Exception 
 	 */
-	private LocalAula populaLocalAula(ResultSet rs) throws SQLException {
+	private LocalAula populaLocalAula(ResultSet rs) throws Exception {
 		LocalAula localAula = new LocalAula();
 		localAula.setId(rs.getInt("id_local_aula"));
 		localAula.setBloco(rs.getString("bloco"));

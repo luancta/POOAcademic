@@ -18,8 +18,9 @@ public class DocenteDao extends GenericDao{
 	 * 
 	 * @param desc
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<Docente> findAll() {
+	public List<Docente> findAll() throws Exception {
 		List<Docente> Docentes = new ArrayList<Docente>();
 		Connection con = getConnection();
 
@@ -36,7 +37,7 @@ public class DocenteDao extends GenericDao{
 
 			return Docentes;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -45,8 +46,9 @@ public class DocenteDao extends GenericDao{
 	 * 
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	public Docente findById(int id) {
+	public Docente findById(int id) throws Exception {
 		List<Docente> docentes = new ArrayList<Docente>();
 		Connection con = getConnection();
 
@@ -64,7 +66,7 @@ public class DocenteDao extends GenericDao{
 
 			return docentes.isEmpty() ? new Docente() : docentes.get(0);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -73,8 +75,9 @@ public class DocenteDao extends GenericDao{
 	 * 
 	 * @param nome
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<Docente> findByNomeMatricula(String nome) {
+	public List<Docente> findByNomeMatricula(String nome) throws Exception {
 		List<Docente> Docentes = new ArrayList<Docente>();
 		Connection con = getConnection();
 
@@ -95,15 +98,16 @@ public class DocenteDao extends GenericDao{
 
 			return Docentes;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	/**
 	 * Salvar Docente informado
 	 * @param Docente
+	 * @throws Exception 
 	 */
-	public void salvar(Docente docente) {
+	public void salvar(Docente docente) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("INSERT INTO ensino.docente(matricula,id_pessoa) " + "VALUES (?,?)");
@@ -115,15 +119,16 @@ public class DocenteDao extends GenericDao{
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	/**
 	 * Remover Docente informada
 	 * @param Docente
+	 * @throws Exception 
 	 */
-	public void remover(Docente docente) {
+	public void remover(Docente docente) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("DELETE FROM ensino.docente WHERE id_docente = ? ");
@@ -134,7 +139,7 @@ public class DocenteDao extends GenericDao{
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 

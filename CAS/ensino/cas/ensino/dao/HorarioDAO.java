@@ -15,7 +15,7 @@ import cas.util.util.GenericDao;
 public class HorarioDAO extends GenericDao{
 
 	//Busca todos os horarios cadastrados
-	public List<Horario> findHorarios(){
+	public List<Horario> findHorarios() throws Exception{
 		List<Horario> horarios = new ArrayList<Horario>();
 		Connection con = getConnection();
 		
@@ -36,12 +36,12 @@ public class HorarioDAO extends GenericDao{
 				return null;
 			
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 	
 	//Busca um horário pelo seu identificador
-	public Horario findHorarioById(int idHorario){
+	public Horario findHorarioById(int idHorario) throws Exception{
 		List<Horario> horarios = new ArrayList<Horario>();
 		Connection con = getConnection();
 		
@@ -64,7 +64,7 @@ public class HorarioDAO extends GenericDao{
 				return null;
 			
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 	

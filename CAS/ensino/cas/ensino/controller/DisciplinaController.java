@@ -1,7 +1,5 @@
 package cas.ensino.controller;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -20,11 +18,9 @@ public class DisciplinaController {
 
 	/**
 	 * Selecionar operação a ser realizada
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	public void selecionarOperacao() throws IOException, ParseException {
+	public void selecionarOperacao() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -58,11 +54,9 @@ public class DisciplinaController {
 
 	/**
 	 * Pre cadastrar Disciplina
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void preCadastrarDisciplina() throws IOException, ParseException {
+	private void preCadastrarDisciplina() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -87,10 +81,9 @@ public class DisciplinaController {
 	 * Cadastrar Disciplina
 	 * 
 	 * @param nome
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void cadastrarDisciplina(String nome, String sigla) throws IOException, ParseException {
+	private void cadastrarDisciplina(String nome, String sigla) throws Exception {
 		DisciplinaDao dao = new DisciplinaDao();
 		dao.salvar(new Disciplina(nome,sigla));
 		ViewConsoleUtil.setMensagemOperacao("Cadastro realizado com sucesso");
@@ -99,11 +92,9 @@ public class DisciplinaController {
 
 	/**
 	 * Listar Disciplina
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void listarDisciplinas() throws IOException, ParseException {
+	private void listarDisciplinas() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -120,10 +111,9 @@ public class DisciplinaController {
 	 * Buscar e listar Disciplina
 	 * 
 	 * @param nome
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void buscar(String filtro) throws IOException, ParseException {
+	private void buscar(String filtro) throws Exception {
 
 		DisciplinaDao dao = new DisciplinaDao();
 		List<Disciplina> resultado = dao.findByNomeSigla(filtro);
@@ -179,12 +169,9 @@ public class DisciplinaController {
 
 	/**
 	 * Pre remover Disciplina
-	 * 
-	 * @throws NumberFormatException
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void preRemover() throws NumberFormatException, IOException, ParseException {
+	private void preRemover() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -204,10 +191,9 @@ public class DisciplinaController {
 	 * Remover Disciplina
 	 * 
 	 * @param id
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void remover(int id) throws IOException, ParseException {
+	private void remover(int id) throws Exception {
 
 		DisciplinaDao dao = new DisciplinaDao();
 		Disciplina objRemovido = dao.findById(id);
@@ -222,11 +208,9 @@ public class DisciplinaController {
 
 	/**
 	 * Voltar para aréa administrativa
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void voltar() throws ParseException, IOException {
+	private void voltar() throws Exception {
 
 		MenuController menu = new MenuController();
 		menu.getTelaMenu();

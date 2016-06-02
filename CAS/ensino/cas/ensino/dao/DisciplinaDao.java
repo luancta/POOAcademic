@@ -17,8 +17,9 @@ public class DisciplinaDao extends GenericDao {
 	 * 
 	 * @param desc
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<Disciplina> findAll() {
+	public List<Disciplina> findAll() throws Exception {
 		List<Disciplina> disciplinas = new ArrayList<Disciplina>();
 		Connection con = getConnection();
 
@@ -35,7 +36,7 @@ public class DisciplinaDao extends GenericDao {
 
 			return disciplinas;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -44,8 +45,9 @@ public class DisciplinaDao extends GenericDao {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	public Disciplina findById(int id) {
+	public Disciplina findById(int id) throws Exception {
 		List<Disciplina> disciplinas = new ArrayList<Disciplina>();
 		Connection con = getConnection();
 
@@ -63,7 +65,7 @@ public class DisciplinaDao extends GenericDao {
 
 			return disciplinas.isEmpty() ? new Disciplina() : disciplinas.get(0);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -72,8 +74,9 @@ public class DisciplinaDao extends GenericDao {
 	 * 
 	 * @param nome
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<Disciplina> findByNomeSigla(String nome) {
+	public List<Disciplina> findByNomeSigla(String nome) throws Exception {
 		List<Disciplina> disciplinas = new ArrayList<Disciplina>();
 		Connection con = getConnection();
 
@@ -92,15 +95,16 @@ public class DisciplinaDao extends GenericDao {
 
 			return disciplinas;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	/**
 	 * Salvar Disciplina informada
 	 * @param Disciplina
+	 * @throws Exception 
 	 */
-	public void salvar(Disciplina disciplina) {
+	public void salvar(Disciplina disciplina) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("INSERT INTO ensino.disciplina(nome,sigla) " + "VALUES (?,?)");
@@ -112,15 +116,16 @@ public class DisciplinaDao extends GenericDao {
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	/**
 	 * Remover Disciplina informada
 	 * @param Disciplina
+	 * @throws Exception 
 	 */
-	public void remover(Disciplina disciplina) {
+	public void remover(Disciplina disciplina) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("DELETE FROM ensino.disciplina WHERE id_disciplina = ? ");
@@ -131,7 +136,7 @@ public class DisciplinaDao extends GenericDao {
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 

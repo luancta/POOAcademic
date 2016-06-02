@@ -1,7 +1,5 @@
 package cas.acesso.controller;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.Scanner;
 
 import cas.ensino.controller.EstudanteController;
@@ -13,7 +11,7 @@ import cas.espacoFisico.controller.SalaController;
 
 public class MenuController {
 	
-	public void getTelaMenu () throws ParseException, IOException {
+	public void getTelaMenu () throws Exception {
 		Scanner entrada = new Scanner(System.in);
 		
 		System.out.println("####### Menu Principal #######");

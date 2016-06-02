@@ -17,8 +17,9 @@ public class LaboratorioDao extends GenericDao {
 	 * 
 	 * @param desc
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<Laboratorio> findAll() {
+	public List<Laboratorio> findAll() throws Exception {
 		List<Laboratorio> laboratorios = new ArrayList<Laboratorio>();
 		Connection con = getConnection();
 
@@ -35,7 +36,7 @@ public class LaboratorioDao extends GenericDao {
 
 			return laboratorios;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -44,8 +45,9 @@ public class LaboratorioDao extends GenericDao {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	public Laboratorio findById(int id) {
+	public Laboratorio findById(int id) throws Exception {
 		List<Laboratorio> laboratorios = new ArrayList<Laboratorio>();
 		Connection con = getConnection();
 
@@ -63,7 +65,7 @@ public class LaboratorioDao extends GenericDao {
 
 			return laboratorios.isEmpty() ? new Laboratorio() : laboratorios.get(0);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -72,8 +74,9 @@ public class LaboratorioDao extends GenericDao {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<Laboratorio> findByNome(String nome) {
+	public List<Laboratorio> findByNome(String nome) throws Exception {
 		List<Laboratorio> laboratorios = new ArrayList<Laboratorio>();
 		Connection con = getConnection();
 
@@ -91,15 +94,16 @@ public class LaboratorioDao extends GenericDao {
 
 			return laboratorios;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	/**
 	 * Salvar Laboratorio de aula informada
 	 * @param laboratorio
+	 * @throws Exception 
 	 */
-	public void salvar(Laboratorio laboratorio) {
+	public void salvar(Laboratorio laboratorio) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("INSERT INTO espaco_fisico.laboratorio " + "(nome) " + "VALUES (?)");
@@ -110,15 +114,16 @@ public class LaboratorioDao extends GenericDao {
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	/**
 	 * Remover Laboratorio de aula informada
 	 * @param laboratorio
+	 * @throws Exception 
 	 */
-	public void remover(Laboratorio laboratorio) {
+	public void remover(Laboratorio laboratorio) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("DELETE FROM espaco_fisico.laboratorio " + "WHERE id_laboratorio = ? ");
@@ -129,7 +134,7 @@ public class LaboratorioDao extends GenericDao {
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 

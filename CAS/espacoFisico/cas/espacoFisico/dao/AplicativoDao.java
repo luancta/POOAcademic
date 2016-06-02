@@ -17,8 +17,9 @@ public class AplicativoDao extends GenericDao {
 	 * 
 	 * @param desc
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<Aplicativo> findAll() {
+	public List<Aplicativo> findAll() throws Exception {
 		List<Aplicativo> aplicativos = new ArrayList<Aplicativo>();
 		Connection con = getConnection();
 
@@ -35,7 +36,7 @@ public class AplicativoDao extends GenericDao {
 
 			return aplicativos;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -44,8 +45,9 @@ public class AplicativoDao extends GenericDao {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	public Aplicativo findById(int id) {
+	public Aplicativo findById(int id) throws Exception {
 		List<Aplicativo> aplicativos = new ArrayList<Aplicativo>();
 		Connection con = getConnection();
 
@@ -63,7 +65,7 @@ public class AplicativoDao extends GenericDao {
 
 			return aplicativos.isEmpty() ? new Aplicativo() : aplicativos.get(0);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -72,8 +74,9 @@ public class AplicativoDao extends GenericDao {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<Aplicativo> findByNome(String nome) {
+	public List<Aplicativo> findByNome(String nome) throws Exception {
 		List<Aplicativo> aplicativos = new ArrayList<Aplicativo>();
 		Connection con = getConnection();
 
@@ -91,15 +94,16 @@ public class AplicativoDao extends GenericDao {
 
 			return aplicativos;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	/**
 	 * Salvar Aplicativo de aula informada
 	 * @param aplicativo
+	 * @throws Exception 
 	 */
-	public void salvar(Aplicativo aplicativo) {
+	public void salvar(Aplicativo aplicativo) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("INSERT INTO espaco_fisico.aplicativo " + "(nome) " + "VALUES (?)");
@@ -110,15 +114,16 @@ public class AplicativoDao extends GenericDao {
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	/**
 	 * Remover Aplicativo de aula informada
 	 * @param aplicativo
+	 * @throws Exception 
 	 */
-	public void remover(Aplicativo aplicativo) {
+	public void remover(Aplicativo aplicativo) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("DELETE FROM espaco_fisico.aplicativo " + "WHERE id_aplicativo = ? ");
@@ -129,7 +134,7 @@ public class AplicativoDao extends GenericDao {
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 

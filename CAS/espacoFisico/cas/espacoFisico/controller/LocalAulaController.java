@@ -1,7 +1,5 @@
 package cas.espacoFisico.controller;
 
-import java.io.IOException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -24,11 +22,10 @@ public class LocalAulaController {
 
 	/**
 	 * Selecionar operação a ser realizada
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
+	 * @throws NumberFormatException 
 	 */
-	public void selecionarOperacao() throws IOException, ParseException {
+	public void selecionarOperacao() throws NumberFormatException, Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -63,11 +60,10 @@ public class LocalAulaController {
 
 	/**
 	 * Pre cadastrar localAula de aula
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
+	 * @throws NumberFormatException 
 	 */
-	private void preCadastrarLocalAula() throws IOException, ParseException {
+	private void preCadastrarLocalAula() throws NumberFormatException, Exception {
 
 		Scanner entrada = new Scanner(System.in);
 		LocalAula localAula = new LocalAula();
@@ -131,7 +127,7 @@ public class LocalAulaController {
 		localAula.setCapacidade(Integer.parseInt(capacidade));
 	}
 
-	private void informarSala(Scanner entrada, LocalAula localAula) throws IOException, ParseException {
+	private void informarSala(Scanner entrada, LocalAula localAula) throws NumberFormatException, Exception {
 
 		listarSalas();
 
@@ -151,11 +147,10 @@ public class LocalAulaController {
 
 	/**
 	 * Listar sala de aula
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
+	 * @throws NumberFormatException 
 	 */
-	private void listarSalas() throws IOException, ParseException {
+	private void listarSalas() throws NumberFormatException, Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -173,10 +168,10 @@ public class LocalAulaController {
 	 * Buscar e listar sala de aula
 	 * 
 	 * @param filtro
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
+	 * @throws NumberFormatException 
 	 */
-	private void buscarSala(String filtro) throws IOException, ParseException {
+	private void buscarSala(String filtro) throws NumberFormatException, Exception {
 
 		SalaDao dao = new SalaDao();
 		List<Sala> resultado = dao.findByNumero(filtro);
@@ -202,10 +197,10 @@ public class LocalAulaController {
 	 * Informar Laboratório
 	 * @param entrada
 	 * @param localAula
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
+	 * @throws NumberFormatException 
 	 */
-	private void informarLaboratorio(Scanner entrada, LocalAula localAula) throws IOException, ParseException {
+	private void informarLaboratorio(Scanner entrada, LocalAula localAula) throws NumberFormatException, Exception {
 
 		listarLaboratorio();
 
@@ -225,11 +220,9 @@ public class LocalAulaController {
 
 	/**
 	 * Listar laboratório
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void listarLaboratorio() throws IOException, ParseException {
+	private void listarLaboratorio() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -246,10 +239,9 @@ public class LocalAulaController {
 	 * Buscar e listar laboratórios
 	 * 
 	 * @param filtro
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void buscarLaboratorio(String filtro) throws IOException, ParseException {
+	private void buscarLaboratorio(String filtro) throws Exception {
 
 		LaboratorioDao labDao = new LaboratorioDao();
 		List<Laboratorio> resultado = labDao.findByNome(filtro);
@@ -275,10 +267,10 @@ public class LocalAulaController {
 	 * Cadastrar localAula de aula
 	 * 
 	 * @param tombo
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
+	 * @throws NumberFormatException 
 	 */
-	private void cadastrarLocalAula(LocalAula localAula) throws IOException, ParseException {
+	private void cadastrarLocalAula(LocalAula localAula) throws NumberFormatException, Exception {
 		LocalAulaDao dao = new LocalAulaDao();
 		dao.salvar(localAula);
 		ViewConsoleUtil.setMensagemOperacao("Cadastro realizado com sucesso");
@@ -287,11 +279,10 @@ public class LocalAulaController {
 
 	/**
 	 * Listar local de aula
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
+	 * @throws NumberFormatException 
 	 */
-	private void listarLocalAulas() throws IOException, ParseException {
+	private void listarLocalAulas() throws NumberFormatException, Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -308,10 +299,10 @@ public class LocalAulaController {
 	 * Buscar e listar local de aula
 	 * 
 	 * @param filtro
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
+	 * @throws NumberFormatException 
 	 */
-	private void buscar(String filtro) throws IOException, ParseException {
+	private void buscar(String filtro) throws NumberFormatException, Exception {
 
 		LocalAulaDao dao = new LocalAulaDao();
 		List<LocalAula> resultado = dao.findByBloco(filtro);
@@ -370,12 +361,9 @@ public class LocalAulaController {
 
 	/**
 	 * Pre remover localAula de aula
-	 * 
-	 * @throws NumberFormatException
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void preRemover() throws NumberFormatException, IOException, ParseException {
+	private void preRemover() throws Exception {
 
 		Scanner entrada = new Scanner(System.in);
 
@@ -395,10 +383,10 @@ public class LocalAulaController {
 	 * Remover LocalAula de aula
 	 * 
 	 * @param id
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
+	 * @throws NumberFormatException 
 	 */
-	private void remover(int id) throws IOException, ParseException {
+	private void remover(int id) throws NumberFormatException, Exception {
 
 		LocalAulaDao dao = new LocalAulaDao();
 		LocalAula objRemovido = dao.findById(id);
@@ -414,11 +402,9 @@ public class LocalAulaController {
 
 	/**
 	 * Voltar para aréa administrativa
-	 * 
-	 * @throws IOException
-	 * @throws ParseException
+	 * @throws Exception 
 	 */
-	private void voltar() throws ParseException, IOException {
+	private void voltar() throws Exception {
 
 		MenuController menu = new MenuController();
 		menu.getTelaMenu();

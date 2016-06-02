@@ -17,8 +17,9 @@ public class LaboratorioAplicativoDao extends GenericDao {
 	 * 
 	 * @param desc
 	 * @return
+	 * @throws Exception 
 	 */
-	public List<LaboratorioAplicativo> findAll() {
+	public List<LaboratorioAplicativo> findAll() throws Exception {
 		List<LaboratorioAplicativo> laboratorios = new ArrayList<LaboratorioAplicativo>();
 		Connection con = getConnection();
 
@@ -35,7 +36,7 @@ public class LaboratorioAplicativoDao extends GenericDao {
 
 			return laboratorios;
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -44,8 +45,9 @@ public class LaboratorioAplicativoDao extends GenericDao {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	public LaboratorioAplicativo findById(int id) {
+	public LaboratorioAplicativo findById(int id) throws Exception {
 		List<LaboratorioAplicativo> laboratorios = new ArrayList<LaboratorioAplicativo>();
 		Connection con = getConnection();
 
@@ -63,7 +65,7 @@ public class LaboratorioAplicativoDao extends GenericDao {
 
 			return laboratorios.isEmpty() ? new LaboratorioAplicativo() : laboratorios.get(0);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 	
@@ -72,8 +74,9 @@ public class LaboratorioAplicativoDao extends GenericDao {
 	 * 
 	 * @param id
 	 * @return
+	 * @throws Exception 
 	 */
-	public LaboratorioAplicativo findByLabApl(int idLaboraotrio, int idAplicativo) {
+	public LaboratorioAplicativo findByLabApl(int idLaboraotrio, int idAplicativo) throws Exception {
 		List<LaboratorioAplicativo> laboratorios = new ArrayList<LaboratorioAplicativo>();
 		Connection con = getConnection();
 
@@ -92,15 +95,16 @@ public class LaboratorioAplicativoDao extends GenericDao {
 
 			return laboratorios.isEmpty() ? new LaboratorioAplicativo() : laboratorios.get(0);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	/**
 	 * Salvar LaboratorioAplicativo de aula informada
 	 * @param laboratorio
+	 * @throws Exception 
 	 */
-	public void salvar(LaboratorioAplicativo laboratorio) {
+	public void salvar(LaboratorioAplicativo laboratorio) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("INSERT INTO espaco_fisico.laboratorio_aplicativo " + "(id_laboratorio, id_aplicativo) " + "VALUES (?,?)");
@@ -112,15 +116,16 @@ public class LaboratorioAplicativoDao extends GenericDao {
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
 	/**
 	 * Remover LaboratorioAplicativo de aula informada
 	 * @param laboratorio
+	 * @throws Exception 
 	 */
-	public void remover(LaboratorioAplicativo laboratorio) {
+	public void remover(LaboratorioAplicativo laboratorio) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
 					.prepareStatement("DELETE FROM espaco_fisico.laboratorio_aplicativo " + "WHERE id_laboratorio_aplicativo = ? ");
@@ -131,7 +136,7 @@ public class LaboratorioAplicativoDao extends GenericDao {
 			pstmt.close();
 
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
+			throw new Exception(e.getMessage());
 		}
 	}
 
@@ -140,9 +145,9 @@ public class LaboratorioAplicativoDao extends GenericDao {
 	 * 
 	 * @param rs
 	 * @return
-	 * @throws SQLException
+	 * @throws Exception 
 	 */
-	private LaboratorioAplicativo populaLaboratorioAplicativo(ResultSet rs) throws SQLException {
+	private LaboratorioAplicativo populaLaboratorioAplicativo(ResultSet rs) throws Exception {
 		LaboratorioDao labDao = new LaboratorioDao();
 		AplicativoDao aplDao = new AplicativoDao();
 		
