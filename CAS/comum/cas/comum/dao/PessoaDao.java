@@ -66,13 +66,16 @@ import cas.util.util.GenericDao;
 			PreparedStatement stm = con.prepareStatement(sql);
 			stm.setString(1, cpf);
 			ResultSet rs = stm.executeQuery();
-			rs.next();
-			Pessoa pessoa =  populaPessoa(rs);
-			if(pessoa != null && pessoa.getId() > 0)
-				return pessoa;
-			else
+
+			if(rs.next()){
+				rs.next();
+				Pessoa pessoa =  populaPessoa(rs);
+				if(pessoa != null && pessoa.getId() > 0)
+					return pessoa;
+				else
+					return null;
+			} else
 				return null;
-			
 		}catch (SQLException e){
 			throw new Exception(e.getMessage());
 		}

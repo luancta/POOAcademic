@@ -71,7 +71,7 @@ public class DocenteController {
 			System.out.println("Cadastrar PESSOA para o CPF " + cpf + " :");
 			System.out.println("Por favor digite o nome da PESSOA:");
 			String nome = entrada.nextLine();
-			System.out.println("Por favor digite a DATA DE NASCIMENTO:");
+			System.out.println("Por favor digite a DATA DE NASCIMENTO (dd/MM/yyyy) :");
 			String dataNascimento = entrada.nextLine();
 			Date dtNascimento = null;
 			if(!dataNascimento.isEmpty()){
@@ -161,15 +161,15 @@ public class DocenteController {
 			ViewConsoleUtil.setMensagemErro("Nenhum registro foi encontrado");
 			selecionarOperacao();
 		}else {
-			ViewConsoleUtil.setTabelaHead("id", "Nome", "Operação");
+			ViewConsoleUtil.setTabelaHead("id", "Matricula", "Nome","Operação");
 			for (Docente docente : resultado) {
 				System.out.println("");
-				ViewConsoleUtil.setTabelaItem(String.valueOf(docente.getId()), docente.getMatricula(),
+				ViewConsoleUtil.setTabelaItem(String.valueOf(docente.getId()), docente.getMatricula(),docente.getPessoa().getNome(),
 						"R - Remover / B - Buscar / V - Voltar");
 			}
 			
 			System.out.println("");
-			System.out.println("Total de " + resultado.size() + " disciplinas encontradas.");
+			System.out.println("Total de " + resultado.size() + " Docentes encontrados.");
 			System.out.println("");
 		}
 

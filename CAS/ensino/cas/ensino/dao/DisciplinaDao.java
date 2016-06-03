@@ -80,7 +80,7 @@ public class DisciplinaDao extends GenericDao {
 		List<Disciplina> disciplinas = new ArrayList<Disciplina>();
 		Connection con = getConnection();
 
-		String sql = "SELECT * FROM ensino.disciplina WHERE nome like ? OR sigla ? ";
+		String sql = "SELECT * FROM ensino.disciplina WHERE nome like ? OR sigla like ? ";
 
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);

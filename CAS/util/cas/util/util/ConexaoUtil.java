@@ -55,8 +55,7 @@ public class ConexaoUtil {
                 conexao = con.getConexao();
             }
             java.sql.Statement stm = conexao.createStatement();
-
-            ResultSet rs = stm.executeQuery(" SELECT * FROM acesso.usuario ");
+            ResultSet rs = stm.executeQuery(" SELECT * FROM acesso.usuario limit 1 ");
             while (rs.next()) {
                int id =  rs.getInt(1);
                id++;

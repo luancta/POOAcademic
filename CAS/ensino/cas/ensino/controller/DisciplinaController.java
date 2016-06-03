@@ -61,18 +61,22 @@ public class DisciplinaController {
 		Scanner entrada = new Scanner(System.in);
 
 		ViewConsoleUtil.limparConsole();
-		ViewConsoleUtil.setBreadCrumb("Cadastrar Laboratorio");
+		ViewConsoleUtil.setBreadCrumb("Cadastrar Disciplina");
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor digite o nome do laboratorio");
+		ViewConsoleUtil.setMensagemOpcao("Por favor digite o nome da Disciplina");
 		String nome = entrada.nextLine();
+		ViewConsoleUtil.setMensagemOpcao("Por favor digite a SIGLA da disciplina");
 		String sigla = entrada.nextLine();
 		ViewConsoleUtil.setDivisor();
 
-		if (!nome.isEmpty())
-			cadastrarDisciplina(nome, sigla);
-		else {
-			ViewConsoleUtil.setMensagemErro("Número: campo obrigatório não informado.");
+		if (nome.isEmpty()){
+			ViewConsoleUtil.setMensagemErro("Nome: campo obrigatório não informado.");
 			preCadastrarDisciplina();
+		} else if (sigla.isEmpty()){
+			ViewConsoleUtil.setMensagemErro("SIGLA: campo obrigatório não informado.");
+			preCadastrarDisciplina();
+		} else {
+			cadastrarDisciplina(nome, sigla);
 		}
 
 	}
@@ -124,10 +128,10 @@ public class DisciplinaController {
 			ViewConsoleUtil.setMensagemErro("Nenhum registro foi encontrado");
 			selecionarOperacao();
 		}else {
-			ViewConsoleUtil.setTabelaHead("id", "Nome", "Operação");
+			ViewConsoleUtil.setTabelaHead("id", "Nome", "SIGLA", "Operação");
 			for (Disciplina disciplina : resultado) {
 				System.out.println("");
-				ViewConsoleUtil.setTabelaItem(String.valueOf(disciplina.getId()), disciplina.getNome(),
+				ViewConsoleUtil.setTabelaItem(String.valueOf(disciplina.getId()), disciplina.getNome(), disciplina.getSigla(),
 						"R - Remover / B - Buscar / V - Voltar");
 			}
 			

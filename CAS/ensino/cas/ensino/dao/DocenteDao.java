@@ -61,7 +61,7 @@ public class DocenteDao extends GenericDao{
 			ResultSet rs = stm.executeQuery();
 
 			while (rs.next()) {
-				docentes.add(populaDocentes(rs));
+				docentes.add(populaApenasDocente(rs));
 			}
 
 			return docentes.isEmpty() ? new Docente() : docentes.get(0);
@@ -81,9 +81,9 @@ public class DocenteDao extends GenericDao{
 		List<Docente> Docentes = new ArrayList<Docente>();
 		Connection con = getConnection();
 
-		String sql = 	  " SELECT d.* FROM ensino.docente d "
-						+ " INNER JOIN comum.pessoa p USING (id_docente) " 
-						+ " WHERE p.nome like ? OR d.matricula ? ";
+		String sql = 	  " SELECT * FROM ensino.docente d "
+						+ " INNER JOIN comum.pessoa p ON d.id_pessoa = p.id_pessoa " 
+						+ " WHERE p.nome like ? OR d.matricula like ? ";
 
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
@@ -144,7 +144,7 @@ public class DocenteDao extends GenericDao{
 	}
 
 	/**
-	 * Popula Docente encontrada
+	 * Popula Docente encontrado
 	 * 
 	 * @param rs
 	 * @return
@@ -154,7 +154,35 @@ public class DocenteDao extends GenericDao{
 		Docente docente = new Docente();
 		docente.setId(rs.getInt("id_docente"));
 		docente.setMatricula(rs.getString("matricula"));
-		docente.setPessoa(new Pessoa(rs.getInt("id_pessoa")));
+		
+		Pessoa pessoa = new Pessoa(rs.getInt("id_pessoa"));
+		pessoa.setNome(rs.getString("nome"));
+		pessoa.setCpf(rs.getString("cpf"));
+		pessoa.setRg(rs.getString("registro_geral"));
+		pessoa.setNomeMae(rs.getString("nome_mae"));
+		pessoa.setNomePai(rs.getString("nome_pai"));
+		pessoa.setEndereco(rs.getString("endereco"));
+		pessoa.setBairro(rs.getString("bairro"));
+		pessoa.setCep(rs.getString("cep"));
+		pessoa.setDataNascimento(rs.getDate("data_nascimento"));
+		
+		docente.setPessoa(pessoa);
+		return docente;
+	}
+	
+	/**
+	 * Popula Docente encontrado
+	 * 
+	 * @param rs
+	 * @return
+	 * @throws SQLException
+	 */
+	private Docente populaApenasDocente(ResultSet rs) throws SQLException {
+		Docente docente = new Docente();
+		docente.setId(rs.getInt("id_docente"));
+		docente.setMatricula(rs.getString("matricula"));
+		Pessoa pessoa = new Pessoa(rs.getInt("id_pessoa"));
+		docente.setPessoa(pessoa);
 		return docente;
 	}
 }
