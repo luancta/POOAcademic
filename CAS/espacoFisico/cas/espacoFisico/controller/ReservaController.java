@@ -432,6 +432,56 @@ public class ReservaController {
 		selecionarOperacao();
 	}
 
+private boolean validadorData(String data){
+		
+		data = data.replace('-', '*');
+		String sub = "";
+		int indexOfMarcoAno = 5;
+		int indexOfMarcoMes = 2;
+		int indexOfInicioMes = 3;
+		int indexOfInicioDia = 0;
+		
+		if(data.length() == 10){	
+			int primeiroDigitoMes = Integer.parseInt(data, indexOfInicioMes);
+			int segundoDigitoMes = Integer.parseInt(data, indexOfInicioMes+1);
+			int primeiroDigitoDia = Integer.parseInt(data, indexOfInicioDia);
+			int segundoDigitoDia = Integer.parseInt(data, indexOfInicioDia+1);
+			
+			for (int i = data.length() - 1 ; i <= 0 ; i--){
+				sub = data.substring(i-1, i);
+				if(sub.equals("-")){
+					return false;
+				}
+				if((sub.equals("*") && i != indexOfMarcoAno) || (sub.equals("*") && i != indexOfMarcoMes)){
+					return false;
+				}
+				if(!isNumeric(sub)){
+					return false;
+				}
+				if((i == indexOfInicioMes && primeiroDigitoMes > 1) || (i == indexOfInicioMes && primeiroDigitoMes == 1 && segundoDigitoMes > 2)
+						|| (i == indexOfInicioDia && primeiroDigitoDia > 3) || (i == indexOfInicioDia && primeiroDigitoDia == 3 && segundoDigitoDia > 0)){
+					return false;
+				}
+			}
+		}else{
+			return false;
+		}
+		return true;
+	}
+	
+	private boolean isNumeric (String str){
+		String sub = "";
+		for (int i = 0; i < str.length() - 1 ; i++){
+			sub = str.substring(i, i);
+			if(sub.equals("0") && sub.equals("1") && sub.equals("2") && sub.equals("3") && sub.equals("4")
+					&& sub.equals("5") && sub.equals("6") && sub.equals("7") && sub.equals("8") && sub.equals("9")){
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
 	/**
 	 * Voltar para aréa administrativa
 	 * 
