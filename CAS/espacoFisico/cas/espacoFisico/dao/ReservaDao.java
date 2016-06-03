@@ -114,9 +114,9 @@ public class ReservaDao extends GenericDao {
 
 			pstmt.setBoolean(1, reserva.isUsaProjetor());
 			pstmt.setBoolean(2, reserva.isAtivo());
-			pstmt.setObject(3, reserva.getData());
-			pstmt.setInt(3, reserva.getTurma() != null ? reserva.getTurma().getId() : 1);
-			pstmt.setInt(4, reserva.getLocalAula() != null ? reserva.getLocalAula().getId() : 1);
+			pstmt.setObject(3,  new java.sql.Date(reserva.getData().getTime()));
+			pstmt.setInt(4, reserva.getTurma() != null ? reserva.getTurma().getId() : 1);
+			pstmt.setInt(5, reserva.getLocalAula() != null ? reserva.getLocalAula().getId() : 1);
 
 			pstmt.execute();
 			pstmt.close();

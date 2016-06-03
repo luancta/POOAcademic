@@ -1,8 +1,8 @@
 package cas.espacoFisico.controller;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -321,7 +321,7 @@ public class ReservaController {
 		ViewConsoleUtil.limparConsole();
 		ViewConsoleUtil.setBreadCrumb("Listar Reserva");
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor informe o número do reserva de ");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe o código da turma");
 		String filtro = entrada.nextLine();
 
 		buscar(filtro);

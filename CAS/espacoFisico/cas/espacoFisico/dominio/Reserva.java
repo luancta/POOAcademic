@@ -1,6 +1,6 @@
 package cas.espacoFisico.dominio;
 
-import java.sql.Date;
+import java.util.Date;
 
 import cas.ensino.dominio.Turma;
 
