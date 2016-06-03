@@ -1,8 +1,10 @@
 package cas.comum.controller;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Scanner;
+
 
 import cas.comum.dao.PessoaDao;
 import cas.comum.dominio.Pessoa;
@@ -49,8 +51,13 @@ public class PessoaController {
 			return null;
 		}
 		else{
-			SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-			dataDataNascimento = formato.parse(dataNascimento);
+			try {
+				SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+				dataDataNascimento = formato.parse(dataNascimento);
+			} catch (ParseException ex) {
+			    return null;   
+			}
+			
 		}
 		if(cpf.isEmpty()){
 			System.out.println("\n**CPF: campo obrigatório não informado. \n");
