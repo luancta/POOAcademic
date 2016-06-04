@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import cas.acesso.controller.MenuController;
 import cas.comum.dao.TurnoDAO;
 import cas.comum.dominio.Turno;
 
@@ -91,6 +92,7 @@ public class TurnoController {
 		}else{
 			System.out.println("Nenhum turno encontrado.");
 		}
+		selecionarOperacao();
 	}
 	
 	private void preRemoverTurno() throws Exception{
@@ -123,8 +125,9 @@ public class TurnoController {
 		selecionarOperacao();
 	}
 	
-	private void voltar(){
-		
+	private void voltar() throws Exception{
+		MenuController menu = new MenuController();
+		menu.getTelaMenu();
 	}
 	
 }

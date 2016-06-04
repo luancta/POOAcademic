@@ -73,29 +73,28 @@ public void selecionarOperacao() throws Exception {
 		System.out.println("Por favor selecione o turno, cujo horário fará parte...");
 		
 		//Listando os turnos
-		int count = 0;
 		turnos = turnoDAO.findTurnos();
 		
 		if(!turnos.isEmpty()){
 			System.out.println("### Lista de Turnos: ###");
-			for(Turno turno : turnos){
-				count++;			
-				System.out.println("#"+count+" - "+turno.getDescricao());
+			for(Turno turno : turnos){			
+				System.out.println("#"+turno.getId()+" - "+turno.getDescricao());
 			}
 		}else{
 			System.out.println("Nenhum turno encontrado.");
 			System.out.println("Selecione opção 0 - Sem Turno.");
 		}
 		
-		int turnoOp = entradaTurno.nextInt();
-		entradaTurno.close();
+		int turnoOp = entradaTurno.nextInt(); 
 		
-		Turno turno = new Turno();
-		if(turnoOp < 0){
+		Turno turno = turnoDAO.findTurnobyId(turnoOp);
+		if(turno == null){
+			entradaTurno.close();
 			System.out.println("Opção Incorreta, retornando para o incio da operação...");
 			selecionarOperacao();
 		}else{
 			turno.setId(turnoOp);
+			entradaTurno.close();
 		}
 		
 		System.out.println("Por favor selecione o inicio do horário (Padrão HH:MM:SS, incluindo os dois pontos)...");
