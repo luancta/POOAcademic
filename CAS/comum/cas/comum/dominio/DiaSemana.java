@@ -16,4 +16,17 @@ public enum DiaSemana {
 		default:return null;
 		}
 	}
+	
+	public int getIndexOfDia(DiaSemana dia){
+		switch(dia){
+		case DOMINGO: return 0;
+		case SEGUNDA: return 1;
+		case TERCA: return 2;
+		case QUARTA: return 3;
+		case QUINTA: return 4;
+		case SEXTA: return 5;
+		case SABADO: return 6;
+		default: return -1;
+		}
+	}
 }

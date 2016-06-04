@@ -97,7 +97,23 @@ public class HorarioDAO extends GenericDao{
 			pstmt.setInt(1, horario.getTurno().getId());
 			pstmt.setTime(2, horario.getHoraInicio());
 			pstmt.setTime(3, horario.getHoraFim());
-			//pstmt.setInt(4, horario.getDiaSemana());
+			pstmt.setInt(4, horario.getDiaSemana().getIndexOfDia(horario.getDiaSemana()));
+
+			pstmt.execute();
+			pstmt.close();
+
+		} catch (SQLException e) {
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	
+	public void remover(int idHorario) throws Exception {
+		try {
+			PreparedStatement pstmt = getConnection()
+					.prepareStatement("DELETE FROM ensino.horario WHERE id_horario = ?");
+
+			pstmt.setInt(1, idHorario);
 
 			pstmt.execute();
 			pstmt.close();

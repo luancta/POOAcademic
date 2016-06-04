@@ -15,12 +15,14 @@ import java.util.Scanner;
 
 import com.sun.jmx.snmp.Timestamp;
 
+import cas.acesso.controller.MenuController;
 import cas.comum.dao.TurnoDAO;
 import cas.comum.dominio.DiaSemana;
 import cas.comum.dominio.Turno;
 import cas.ensino.dao.HorarioDAO;
 import cas.ensino.dominio.Disciplina;
 import cas.ensino.dominio.Horario;
+import cas.util.util.ViewConsoleUtil;
 
 public class HorarioController {
 
@@ -43,8 +45,8 @@ public void selecionarOperacao() throws Exception {
 		
 		switch (operacao) {
 		case "1":preCadastrarHorario(); break;
-		//case "2":listarHorario(); break;
-		//case "3":preRemoverHorario(); break;
+		case "2":listarHorarios(); break;
+		case "3":preRemoverHorario(); break;
 		case "9":voltar(); break;
 		default: System.out.println("Opção selecionada inexistente"); 
 				 selecionarOperacao();
@@ -53,7 +55,7 @@ public void selecionarOperacao() throws Exception {
 	}
 	
 	/**
-	 * Pre cadastrar sala de aula
+	 * Pre cadastrar horario
 	 * @throws Exception 
 	 */
 	private void preCadastrarHorario() throws Exception{
@@ -113,9 +115,9 @@ public void selecionarOperacao() throws Exception {
 		
 		System.out.println("Por favor selecione o fim do horário (Padrão DD-MM-AAAA)...");
 		
-		//Tratando entrada da data fim
+		//Tratando entrada da hora fim
 		String horaFinal = entradaHoraFim.nextLine();
-		entradaHoraInicio.close();
+		entradaHoraFim.close();
 		
 		Time horaFim = Time.valueOf("99:99:00");
 		if(!horaInicio.isEmpty() && validadorHora(horaFinal)){
@@ -167,57 +169,63 @@ public void selecionarOperacao() throws Exception {
 		selecionarOperacao();
 	}
 	
-/*	//Lista de Turnos
-	private void listarTurnos(){
-		TurnoDAO dao = new TurnoDAO();
-		List<Turno> turnos = new ArrayList<Turno>();
-		int count = 0;
+	//Lista de Horarios
+	private void listarHorarios() throws Exception{
+		HorarioDAO dao = new HorarioDAO();
+		List<Horario> horarios = new ArrayList<Horario>();
 		
-		turnos = dao.findTurnos();
+		horarios = dao.findHorarios();
 		
-		if(!turnos.isEmpty()){
-			System.out.println("### Lista de Turnos: ###");
-			for(Turno turno : turnos){
-				count++;			
-				System.out.println("#"+count+" - "+turno.getDescricao());
+		if(!horarios.isEmpty()){
+			System.out.println("### Lista de Horarios: ###");
+			for(Horario horario : horarios){
+				System.out.println("#"+horario.getId()+" -  Hora Inicio: "+horario.getHoraInicio()+" / Hora Fim: "+horario.getHoraFim()
+						+ " | Turno: "+horario.getTurno().getDescricao()+" Dia: "+horario.getDiaSemana());
 			}
 		}else{
-			System.out.println("Nenhum turno encontrado.");
+			System.out.println("Nenhum horário encontrado.");
 		}
 	}
 	
-	private void preRemoverTurno(){
+	private void preRemoverHorario() throws Exception{
 		Scanner entrada = new Scanner(System.in);
+		HorarioDAO horarioDao = new HorarioDAO();
 		
-		System.out.println("####### Remover Turno #######");
+		System.out.println("####### Remover Horario #######");
 		System.out.println("---------------------------------------");
-		System.out.println("Por favor digite a descrição do turno que deseja remover (Manhã, Tarde e etc...):");
-		String descricao = entrada.nextLine();
+		System.out.println("Por favor digite o identificador do horario que deseja remover...");
+		System.out.println("Segue a lista de horarios");
+		listarHorarios();
 		System.out.println("---------------------------------------");
 		
-		if(!descricao.isEmpty()){
-			entrada.close();
-			removerTurno(descricao);
+		Integer idHorario = entrada.nextInt();
+		entrada.close();
+		
+		if(idHorario != 0){
+			removerTurno(idHorario);
 		}else{
-			System.out.println("\n**Descrição: campo obrigatório não informado. \n");
-			entrada.close();
-			preCadastrarTurno();
+			System.out.println("\n**ID Horario: campo obrigatório não informado. \n");
+			preRemoverHorario();
 		}
+		
 	}
 	
-	private void removerTurno(String desc){
-		TurnoDAO dao = new TurnoDAO();
+	private void removerTurno(int idHorario) throws Exception{
+		HorarioDAO dao = new HorarioDAO();
+		Horario objRemovido = dao.findHorarioById(idHorario);
 		
-		String sql = "DELETE FROM comum.turno WHERE descricao = ?";
-
-		dao.delete(sql, desc);
-		
+		if(objRemovido == null){
+			ViewConsoleUtil.setMensagemErro("O registro informado " + idHorario+" não foi encontrado.");
+			preRemoverHorario();
+		}
+		dao.remover(idHorario);
 		System.out.println("Turno removido com sucesso.");
 		selecionarOperacao();
 	}
-	*/
-	private void voltar(){
-		
+	
+	private void voltar() throws Exception{
+		MenuController menu = new MenuController();
+		menu.getTelaMenu();
 	}
 	
 private boolean validadorHora(String hora){
