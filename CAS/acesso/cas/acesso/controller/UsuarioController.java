@@ -21,22 +21,27 @@ public class UsuarioController {
 	public void selecionarOperacao() throws Exception{
 		
 		Scanner entrada = new Scanner(System.in);
-		
-		System.out.println("####### Gerenciar Usuário #######");
-		System.out.println("---------------------------------------");
-		System.out.println("Por favor digite uma opção desejada:");
-		System.out.println("1 - Cadastrar um novo usuário.;");
-		System.out.println("2 - Listar usuário(s) existente(s).;");
-		System.out.println("3 - Remover usuário(s) existente(s).;");
-		System.out.println("9 - << Voltar.;");
-		System.out.println("---------------------------------------");
+
+		ViewConsoleUtil.limparConsole();
+		ViewConsoleUtil.setDivisor();
+
+		ViewConsoleUtil.setBreadCrumb("Gerenciar Usuário");
+		ViewConsoleUtil.setDivisor();
+		ViewConsoleUtil.setMensagemOpcao("Por favor digite uma opção desejada:");
+		ViewConsoleUtil.setOpcao(1, "Cadastrar uma novo usuário.;");
+		ViewConsoleUtil.setOpcao(2, "Listar usuário(s) existente(s).;");
+		ViewConsoleUtil.setOpcao(3, "Remover usuário(s) existente(s).;");
+		ViewConsoleUtil.setOpcao(9, "<< Voltar");
+		ViewConsoleUtil.setDivisor();
 		
 		String operacao = entrada.nextLine();
 		
 		switch (operacao) {
 		case "1":preCadastrarUsuario(); break;
 		case "2":listarUsuario(); break;
-		case "9":voltar(); break;
+		case "9":
+			voltar();
+			break;
 		default: System.out.println("Opção selecionada inexistente"); 
 				 selecionarOperacao();
 				 break;
@@ -223,8 +228,11 @@ public class UsuarioController {
 	/**
 	 * Voltar para aréa administrativa
 	 */
-	private void voltar(){
-		//TODO AINDA VAI SER CRIADO
+	private void voltar() throws Exception {
+
+		MenuController menu = new MenuController();
+		menu.getTelaMenu();
+
 	}
 	
 

@@ -88,7 +88,7 @@ public class EstudanteController {
 		ViewConsoleUtil.setDivisor();
 		ViewConsoleUtil.setBreadCrumb("Listar Estudante");
 		ViewConsoleUtil.setDivisor();
-		ViewConsoleUtil.setMensagemOpcao("Por favor informe a matricula do estudante:");
+		ViewConsoleUtil.setMensagemOpcao("Por favor informe a matricula do estudante");
 		String filtro = entrada.nextLine();
 
 		try {

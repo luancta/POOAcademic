@@ -37,8 +37,8 @@ public class EstudanteDao extends GenericDao{
 		Connection con = getConnection();
 
 		String sql = " SELECT estudante.id_estudante, estudante.matricula, estudante.curso, pessoa.id_pessoa, pessoa.nome FROM ensino.estudante estudante "
-				+ " JOIN comum.pessoa pessoa ON pessoa.id_pessoa = estudante.id_pesssoa "
-				+ " WHERE matricula like ?";
+				+ " JOIN comum.pessoa pessoa ON pessoa.id_pessoa = estudante.id_pessoa "
+				+ " WHERE estudante.matricula like ?";
 
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);
@@ -71,7 +71,11 @@ public class EstudanteDao extends GenericDao{
 		List<Estudante> estudantes = new ArrayList<Estudante>();
 		Connection con = getConnection();
 
-		String sql = " SELECT estudante.id_estudante, estudante.matricula, estudante.curso, pessoa.id_pessoa, pessoa.nome FROM ensino.estudante estudante WHERE estudante.id_estudante = ? ";
+		String sql = " SELECT estudante.id_estudante, estudante.matricula, estudante.curso, "
+				+ " pessoa.id_pessoa, pessoa.nome "
+				+ " FROM ensino.estudante estudante "
+				+ " JOIN comum.pessoa pessoa ON pessoa.id_pessoa = estudante.id_pessoa "
+				+ " WHERE estudante.id_estudante = ? ";
 
 		try {
 			PreparedStatement stm = con.prepareStatement(sql);

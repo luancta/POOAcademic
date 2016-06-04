@@ -68,7 +68,6 @@ import cas.util.util.GenericDao;
 			ResultSet rs = stm.executeQuery();
 
 			if(rs.next()){
-				rs.next();
 				Pessoa pessoa =  populaPessoa(rs);
 				if(pessoa != null && pessoa.getId() > 0)
 					return pessoa;
