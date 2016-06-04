@@ -62,8 +62,8 @@ CREATE TABLE ensino.horario
 (
 id_horario integer not null,
 id_turno integer,
-hora_inicio timestamp without time zone,
-hora_time  timestamp without time zone,
+hora_inicio time without time zone,
+hora_time  time without time zone,
 dia_semana integer,
 curso character varying (255),
 CONSTRAINT pk_HorarioID PRIMARY KEY (id_horario),

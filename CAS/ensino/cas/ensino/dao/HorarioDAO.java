@@ -88,4 +88,22 @@ public class HorarioDAO extends GenericDao{
 		
 		return horario;
 	}
+	
+	public void salvar(Horario horario) throws Exception {
+		try {
+			PreparedStatement pstmt = getConnection()
+					.prepareStatement("INSERT INTO ensino.disciplina(id_turno, hora_inicio, hora_fim, dia) " + "VALUES (?,?,?,?)");
+
+			pstmt.setInt(1, horario.getTurno().getId());
+			pstmt.setTime(2, horario.getHoraInicio());
+			pstmt.setTime(3, horario.getHoraFim());
+			//pstmt.setInt(4, horario.getDiaSemana());
+
+			pstmt.execute();
+			pstmt.close();
+
+		} catch (SQLException e) {
+			throw new Exception(e.getMessage());
+		}
+	}
 }

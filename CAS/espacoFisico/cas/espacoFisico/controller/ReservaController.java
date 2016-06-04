@@ -459,7 +459,9 @@ private boolean validadorData(String data){
 					return false;
 				}
 				if((i == indexOfInicioMes && primeiroDigitoMes > 1) || (i == indexOfInicioMes && primeiroDigitoMes == 1 && segundoDigitoMes > 2)
-						|| (i == indexOfInicioDia && primeiroDigitoDia > 3) || (i == indexOfInicioDia && primeiroDigitoDia == 3 && segundoDigitoDia > 0)){
+						|| (i == indexOfInicioDia && primeiroDigitoDia > 3) || (i == indexOfInicioDia && primeiroDigitoDia == 3 && segundoDigitoDia > 0)
+						|| (i == indexOfInicioMes && primeiroDigitoMes == 0 && segundoDigitoMes == 0)
+						|| (i == indexOfInicioDia && primeiroDigitoDia == 0 && segundoDigitoDia == 0)){
 					return false;
 				}
 			}

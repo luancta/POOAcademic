@@ -4,6 +4,7 @@ import java.rmi.registry.LocateRegistry;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,6 +12,8 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import com.sun.jmx.snmp.Timestamp;
 
 import cas.comum.dao.TurnoDAO;
 import cas.comum.dominio.DiaSemana;
@@ -57,8 +60,8 @@ public void selecionarOperacao() throws Exception {
 		List<Turno> turnos = new ArrayList<Turno>();
 		TurnoDAO turnoDAO = new TurnoDAO();
 		Scanner entradaTurno = new Scanner(System.in);
-		Scanner entradaDataInicio = new Scanner(System.in);
-		Scanner entradaDataFim = new Scanner(System.in);
+		Scanner entradaHoraInicio = new Scanner(System.in);
+		Scanner entradaHoraFim = new Scanner(System.in);
 		Scanner entradaDiaSemana = new Scanner(System.in);
 		
 		System.out.println("####### Cadastrar Horario #######");
@@ -93,36 +96,32 @@ public void selecionarOperacao() throws Exception {
 			turno.setId(turnoOp);
 		}
 		
-		System.out.println("Por favor selecione o inicio do horário (Padrão DD-MM-AAAA, incluindo os hífens)...");
+		System.out.println("Por favor selecione o inicio do horário (Padrão HH:MM:SS, incluindo os dois pontos)...");
 		
-		//Tratando entrada da data inicio
-		String dataInicio = entradaDataInicio.nextLine();
-		entradaDataInicio.close();
+		//Tratando entrada da hora inicio
+		String horaInicio = entradaHoraInicio.nextLine();
+		entradaHoraInicio.close();
 		
-		Date inicio = null;
-		if(validadorData(dataInicio)){
-			DateFormat dfi = new SimpleDateFormat("dd-MM-yyyy");
-			inicio = (Date) dfi.parse(dataInicio);
+		Time horaIni = Time.valueOf("99:99:00");
+		if(!horaInicio.isEmpty() && validadorHora(horaInicio)){
+			 horaIni = Time.valueOf(horaInicio);
 		}else{
-			System.out.println("Data inicial inválida, retornando para o incio da operação...");
+			System.out.println("Hora inicial inválida, retornando para o incio da operação...");
 			selecionarOperacao();
 		}
-		
-		//Date inicio = toString(dataInicio);
 		
 		
 		System.out.println("Por favor selecione o fim do horário (Padrão DD-MM-AAAA)...");
 		
 		//Tratando entrada da data fim
-		String dataFim = entradaDataFim.nextLine();
-		entradaDataFim.close();
+		String horaFinal = entradaHoraFim.nextLine();
+		entradaHoraInicio.close();
 		
-		Date fim = null;
-		if(validadorData(dataFim)){
-			DateFormat dff = new SimpleDateFormat("dd-MM-yyyy");
-			fim = (Date) dff.parse(dataFim);
+		Time horaFim = Time.valueOf("99:99:00");
+		if(!horaInicio.isEmpty() && validadorHora(horaFinal)){
+			horaFim = Time.valueOf(horaFinal);
 		}else{
-			System.out.println("Data final inválida, retornando para o incio da operação...");
+			System.out.println("Hora Final inválida, retornando para o incio da operação...");
 			selecionarOperacao();
 		}
 		
@@ -144,27 +143,28 @@ public void selecionarOperacao() throws Exception {
 		}
 		System.out.println("---------------------------------------");
 	
-		cadastrarHorario(turno, inicio, fim, diaSemana);
+		cadastrarHorario(turno, horaIni, horaFim, diaSemana);
 		
 	}
 	
 	/**
 	 * Cadastrar horario
 	 * @param 
+	 * @throws Exception 
 	 */
-	private void cadastrarHorario(Turno turno, Date dataInicio, Date dataFim, int dia){
+	private void cadastrarHorario(Turno turno, Time horaInicio, Time horaFim, int dia) throws Exception{
 		
-		/*Horario horario = new Horario();
+		Horario horario = new Horario();
 
 		horario.setTurno(turno);
-		horario.setHoraInicio(dataInicio);
-		horario.setHoraFim(dataFim);
+		horario.setHoraInicio(horaInicio);
+		horario.setHoraFim(horaFim);
 		horario.setDiaSemana(DiaSemana.get(dia));
 		HorarioDAO dao = new HorarioDAO();
 		dao.salvar(horario);
 		
 		System.out.println("<<Cadastro realizado com sucesso.>>");
-		selecionarOperacao();*/
+		selecionarOperacao();
 	}
 	
 /*	//Lista de Turnos
@@ -220,6 +220,51 @@ public void selecionarOperacao() throws Exception {
 		
 	}
 	
+private boolean validadorHora(String hora){
+		
+		hora = hora.replace(':', '*');
+		String sub = "";
+		int indexOfMarcoSegundo = 5;
+		int indexOfMarcoMinuto = 2;
+		int indexOfInicioMinuto = 3;
+		int indexOfInicioHora = 0;
+		int indexOfInicioSegundo = 6;
+		
+		if(hora.length() == 8){	
+			int primeiroDigitoMinuto = Integer.parseInt(hora, indexOfInicioMinuto);
+			int segundoDigitoMinuto = Integer.parseInt(hora, indexOfInicioMinuto+1);
+			int primeiroDigitoHora = Integer.parseInt(hora, indexOfInicioHora);
+			int segundoDigitoHora = Integer.parseInt(hora, indexOfInicioHora+1);
+			int primeiroDigitoSegundo = Integer.parseInt(hora, indexOfInicioSegundo);
+			int segundoDigitoSegundo = Integer.parseInt(hora, indexOfInicioSegundo+1);
+			
+			for (int i = hora.length() - 1 ; i <= 0 ; i--){
+				sub = hora.substring(i-1, i);
+				if(sub.equals(":")){
+					return false;
+				}
+				if((sub.equals("*") && i != indexOfMarcoMinuto) || (sub.equals("*") && i != indexOfMarcoSegundo)){
+					return false;
+				}
+				if(!isNumeric(sub)){
+					return false;
+				}
+				if((i == indexOfInicioHora && primeiroDigitoHora > 2) || (i == indexOfInicioHora && primeiroDigitoHora == 2 && segundoDigitoHora > 3)
+						|| (i == indexOfInicioMinuto && primeiroDigitoMinuto > 6) || (i == primeiroDigitoMinuto && primeiroDigitoMinuto == 6 && segundoDigitoMinuto > 0)
+						|| (i == indexOfInicioSegundo && primeiroDigitoSegundo > 6) || (i == indexOfInicioSegundo && primeiroDigitoSegundo == 6 && segundoDigitoSegundo > 0)){
+					return false;
+				}
+			}
+		}else{
+			return false;
+		}
+		return true;
+	}
+	
+	
+	
+	
+	
 	private boolean validadorData(String data){
 		
 		data = data.replace('-', '*');
@@ -247,7 +292,9 @@ public void selecionarOperacao() throws Exception {
 					return false;
 				}
 				if((i == indexOfInicioMes && primeiroDigitoMes > 1) || (i == indexOfInicioMes && primeiroDigitoMes == 1 && segundoDigitoMes > 2)
-						|| (i == indexOfInicioDia && primeiroDigitoDia > 3) || (i == indexOfInicioDia && primeiroDigitoDia == 3 && segundoDigitoDia > 0)){
+						|| (i == indexOfInicioDia && primeiroDigitoDia > 3) || (i == indexOfInicioDia && primeiroDigitoDia == 3 && segundoDigitoDia > 0)
+						|| (i == indexOfInicioMes && primeiroDigitoMes == 0 && segundoDigitoMes == 0)
+						|| (i == indexOfInicioDia && primeiroDigitoDia == 0 && segundoDigitoDia == 0)){
 					return false;
 				}
 			}
