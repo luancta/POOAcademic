@@ -3,6 +3,7 @@ package cas.ensino.dominio;
 import java.sql.Time;
 
 import cas.comum.dominio.Turno;
+import cas.util.util.Validator;
 import cas.comum.dominio.DiaSemana;
 
 public class Horario {
@@ -43,6 +44,9 @@ public class Horario {
 		this.diaSemana = diaSemana;
 	}
 	
-		
+	public boolean validate(){
+		Validator val = new Validator();
+		return val.validarHorario(this);
+	}	
 
 }

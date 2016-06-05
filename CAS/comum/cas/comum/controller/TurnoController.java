@@ -41,6 +41,7 @@ public class TurnoController {
 	 * @throws Exception 
 	 */
 	private void preCadastrarTurno() throws Exception{
+		Turno turno = new Turno();
 		Scanner entrada = new Scanner(System.in);
 		
 		System.out.println("####### Cadastrar Turno #######");
@@ -49,12 +50,10 @@ public class TurnoController {
 		String descricao = entrada.nextLine();
 		System.out.println("---------------------------------------");
 		
-		if(!descricao.isEmpty()){
-			entrada.close();
-			cadastrarTurno(descricao);
+		turno.setDescricao(descricao);
+		if(turno.validate()){
+			cadastrarTurno(turno);
 		}else{
-			System.out.println("\n**Descrição: campo obrigatório não informado. \n");
-			entrada.close();
 			preCadastrarTurno();
 		}
 		
@@ -65,11 +64,11 @@ public class TurnoController {
 	 * @param descricao
 	 * @throws Exception 
 	 */
-	private void cadastrarTurno(String descricao) throws Exception{
+	private void cadastrarTurno(Turno turno) throws Exception{
 		TurnoDAO dao = new TurnoDAO();
 		dao.save("INSERT INTO comum.turno "
 				+ "(descricao) "
-				+ "VALUES (?)", descricao);
+				+ "VALUES (?)", turno.getDescricao());
 		
 		System.out.println("<<Cadastro realizado com sucesso.>>");
 		selecionarOperacao();
@@ -79,16 +78,14 @@ public class TurnoController {
 	private void listarTurnos() throws Exception{
 		TurnoDAO dao = new TurnoDAO();
 		List<Turno> turnos = new ArrayList<Turno>();
-		int count = 0;
 		
 		turnos = dao.findTurnos();
 		
 		if(!turnos.isEmpty()){
 			System.out.println("### Lista de Turnos: ###");
-			for(Turno turno : turnos){
-				count++;			
-				System.out.println("#"+count+" - "+turno.getDescricao());
-			}
+			turnos.stream().forEach((turno) -> {
+				System.out.println("#"+turno.getId()+" - "+turno.getDescricao());});
+						
 		}else{
 			System.out.println("Nenhum turno encontrado.");
 		}
@@ -96,6 +93,7 @@ public class TurnoController {
 	}
 	
 	private void preRemoverTurno() throws Exception{
+		Turno turno = new Turno();
 		Scanner entrada = new Scanner(System.in);
 		
 		System.out.println("####### Remover Turno #######");
@@ -104,14 +102,12 @@ public class TurnoController {
 		String descricao = entrada.nextLine();
 		System.out.println("---------------------------------------");
 		
-		if(!descricao.isEmpty()){
-			entrada.close();
-			removerTurno(descricao);
-		}else{
-			System.out.println("\n**Descrição: campo obrigatório não informado. \n");
-			entrada.close();
+		turno.setDescricao(descricao);
+		
+		if(turno.validate())
+			removerTurno(turno.getDescricao());
+		else
 			preCadastrarTurno();
-		}
 	}
 	
 	private void removerTurno(String desc) throws Exception{

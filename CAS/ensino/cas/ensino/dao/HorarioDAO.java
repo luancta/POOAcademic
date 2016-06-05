@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cas.comum.dao.TurnoDAO;
 import cas.comum.dominio.DiaSemana;
 import cas.comum.dominio.Turno;
 import cas.ensino.dominio.Horario;
@@ -75,12 +76,17 @@ public class HorarioDAO extends GenericDao{
 	 * 
 	 * @return horario
 	 */
-	private Horario populaHorario(ResultSet rs) throws SQLException{
+	private Horario populaHorario(ResultSet rs) throws Exception{
+		TurnoDAO turnoDao = new TurnoDAO();
 		Horario horario = new Horario();
 		Turno turno = new Turno();
 		
+		
 		horario.setId(rs.getInt("id_horario"));
-		turno.setId(rs.getInt("id_turno"));
+		int turnoId = rs.getInt("id_turno");
+		if(turnoId != 0){
+			turno = turnoDao.findTurnobyId(turnoId);
+		}
 		horario.setTurno(turno);
 		horario.setHoraInicio(rs.getTime("hora_inicio"));
 		horario.setHoraFim(rs.getTime("hora_time"));
@@ -92,7 +98,7 @@ public class HorarioDAO extends GenericDao{
 	public void salvar(Horario horario) throws Exception {
 		try {
 			PreparedStatement pstmt = getConnection()
-					.prepareStatement("INSERT INTO ensino.disciplina(id_turno, hora_inicio, hora_fim, dia) " + "VALUES (?,?,?,?)");
+					.prepareStatement("INSERT INTO ensino.horario (id_turno, hora_inicio, hora_time, dia_semana) " + "VALUES (?,?,?,?)");
 
 			pstmt.setInt(1, horario.getTurno().getId());
 			pstmt.setTime(2, horario.getHoraInicio());

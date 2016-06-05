@@ -41,8 +41,6 @@ public void selecionarOperacao() throws Exception {
 		
 		String operacao = entrada.nextLine();
 		
-		entrada.close();
-		
 		switch (operacao) {
 		case "1":preCadastrarHorario(); break;
 		case "2":listarHorarios(); break;
@@ -59,8 +57,7 @@ public void selecionarOperacao() throws Exception {
 	 * @throws Exception 
 	 */
 	private void preCadastrarHorario() throws Exception{
-		List<Turno> turnos = new ArrayList<Turno>();
-		TurnoDAO turnoDAO = new TurnoDAO();
+		Horario horario = new Horario();
 		Scanner entradaTurno = new Scanner(System.in);
 		Scanner entradaHoraInicio = new Scanner(System.in);
 		Scanner entradaHoraFim = new Scanner(System.in);
@@ -70,57 +67,33 @@ public void selecionarOperacao() throws Exception {
 		System.out.println("---------------------------------------");
 		System.out.println("Um horário é composto por 4 campos, sendo eles: turno, horário inicio, horário fim e dia da semana.");
 		System.out.println("Por favor digite os dados do Horario a ser inserido:");	
-		System.out.println("Por favor selecione o turno, cujo horário fará parte...");
 		
-		//Listando os turnos
-		turnos = turnoDAO.findTurnos();
-		
-		if(!turnos.isEmpty()){
-			System.out.println("### Lista de Turnos: ###");
-			for(Turno turno : turnos){			
-				System.out.println("#"+turno.getId()+" - "+turno.getDescricao());
-			}
-		}else{
-			System.out.println("Nenhum turno encontrado.");
-			System.out.println("Selecione opção 0 - Sem Turno.");
-		}
-		
-		int turnoOp = entradaTurno.nextInt(); 
-		
-		Turno turno = turnoDAO.findTurnobyId(turnoOp);
-		if(turno == null){
-			entradaTurno.close();
-			System.out.println("Opção Incorreta, retornando para o incio da operação...");
-			selecionarOperacao();
-		}else{
-			turno.setId(turnoOp);
-			entradaTurno.close();
-		}
+		informaTurno(entradaTurno, horario);
 		
 		System.out.println("Por favor selecione o inicio do horário (Padrão HH:MM:SS, incluindo os dois pontos)...");
 		
 		//Tratando entrada da hora inicio
 		String horaInicio = entradaHoraInicio.nextLine();
-		entradaHoraInicio.close();
 		
-		Time horaIni = Time.valueOf("99:99:00");
-		if(!horaInicio.isEmpty() && validadorHora(horaInicio)){
+		Time horaIni = Time.valueOf("00:00:00");
+		if(!horaInicio.isEmpty() && validadorFormatoHora(horaInicio)){
 			 horaIni = Time.valueOf(horaInicio);
+			 horario.setHoraInicio(horaIni);
 		}else{
 			System.out.println("Hora inicial inválida, retornando para o incio da operação...");
 			selecionarOperacao();
 		}
 		
 		
-		System.out.println("Por favor selecione o fim do horário (Padrão DD-MM-AAAA)...");
+		System.out.println("Por favor selecione o final do horário (Padrão HH:MM:SS, incluindo os dois pontos)...");
 		
 		//Tratando entrada da hora fim
 		String horaFinal = entradaHoraFim.nextLine();
-		entradaHoraFim.close();
 		
-		Time horaFim = Time.valueOf("99:99:00");
-		if(!horaInicio.isEmpty() && validadorHora(horaFinal)){
+		Time horaFim = Time.valueOf("00:00:00");
+		if(!horaInicio.isEmpty() && validadorFormatoHora(horaFinal)){
 			horaFim = Time.valueOf(horaFinal);
+			horario.setHoraFim(horaFim);
 		}else{
 			System.out.println("Hora Final inválida, retornando para o incio da operação...");
 			selecionarOperacao();
@@ -136,15 +109,14 @@ public void selecionarOperacao() throws Exception {
 		System.out.println("6 - Sabado");
 		
 		int diaSemana = entradaDiaSemana.nextInt();
-		entradaDiaSemana.close();
 		
-		if(diaSemana < 0 || diaSemana > 6){
-			System.out.println("Opção Incorreta, retornando para o incio da operação...");
-			selecionarOperacao();
-		}
+		horario.setDiaSemana(DiaSemana.get(diaSemana));
 		System.out.println("---------------------------------------");
 	
-		cadastrarHorario(turno, horaIni, horaFim, diaSemana);
+		if(horario.validate())
+			cadastrarHorario(horario);
+		else
+			preCadastrarHorario();
 		
 	}
 	
@@ -153,14 +125,8 @@ public void selecionarOperacao() throws Exception {
 	 * @param 
 	 * @throws Exception 
 	 */
-	private void cadastrarHorario(Turno turno, Time horaInicio, Time horaFim, int dia) throws Exception{
+	private void cadastrarHorario(Horario horario) throws Exception{
 		
-		Horario horario = new Horario();
-
-		horario.setTurno(turno);
-		horario.setHoraInicio(horaInicio);
-		horario.setHoraFim(horaFim);
-		horario.setDiaSemana(DiaSemana.get(dia));
 		HorarioDAO dao = new HorarioDAO();
 		dao.salvar(horario);
 		
@@ -177,28 +143,39 @@ public void selecionarOperacao() throws Exception {
 		
 		if(!horarios.isEmpty()){
 			System.out.println("### Lista de Horarios: ###");
-			for(Horario horario : horarios){
+			horarios.stream().forEach((horario) -> {
 				System.out.println("#"+horario.getId()+" -  Hora Inicio: "+horario.getHoraInicio()+" / Hora Fim: "+horario.getHoraFim()
-						+ " | Turno: "+horario.getTurno().getDescricao()+" Dia: "+horario.getDiaSemana());
-			}
+				+ " | Turno: "+horario.getTurno().getDescricao()+" Dia: "+horario.getDiaSemana());
+			});
 		}else{
 			System.out.println("Nenhum horário encontrado.");
 		}
+		selecionarOperacao();
 	}
 	
 	private void preRemoverHorario() throws Exception{
 		Scanner entrada = new Scanner(System.in);
 		HorarioDAO horarioDao = new HorarioDAO();
 		
+		
 		System.out.println("####### Remover Horario #######");
 		System.out.println("---------------------------------------");
 		System.out.println("Por favor digite o identificador do horario que deseja remover...");
 		System.out.println("Segue a lista de horarios");
-		listarHorarios();
-		System.out.println("---------------------------------------");
+		List<Horario> horarios = horarioDao.findHorarios();
+		if(!horarios.isEmpty()){
+			System.out.println("### Lista de Horarios: ###");
+			horarios.stream().forEach((horario) -> {
+				System.out.println("#"+horario.getId()+" -  Hora Inicio: "+horario.getHoraInicio()+" / Hora Fim: "+horario.getHoraFim()
+				+ " | Turno: "+horario.getTurno().getDescricao()+" Dia: "+horario.getDiaSemana());
+			});
+			System.out.println("---------------------------------------");
+		}else{
+			System.out.println("Nenhum horário encontrado.");
+		}
+		
 		
 		Integer idHorario = entrada.nextInt();
-		entrada.close();
 		
 		if(idHorario != 0){
 			removerTurno(idHorario);
@@ -218,7 +195,7 @@ public void selecionarOperacao() throws Exception {
 			preRemoverHorario();
 		}
 		dao.remover(idHorario);
-		System.out.println("Turno removido com sucesso.");
+		System.out.println("Horario removido com sucesso.");
 		selecionarOperacao();
 	}
 	
@@ -227,49 +204,83 @@ public void selecionarOperacao() throws Exception {
 		menu.getTelaMenu();
 	}
 	
+	private void informaTurno(Scanner entradaTurno, Horario horario) throws Exception{
+		System.out.println("Por favor selecione o turno, cujo horário fará parte...");
+		listarTurnos();
+		
+		String idTurno = entradaTurno.nextLine();
+		String regex = "\\d+";
+		if(!idTurno.isEmpty() && idTurno.matches(regex)){
+			TurnoDAO dao = new TurnoDAO();
+			Turno turno = dao.findTurnobyId(Integer.parseInt(idTurno));
+			if(turno != null && turno.getId() != 0){
+				horario.setTurno(turno);
+			}
+			
+		}else{
+			System.out.println("Opção Incorreta, retornando para o incio da operação...");
+			selecionarOperacao();
+		}
+		
+	}
+	
+	private void listarTurnos() throws Exception{
+		TurnoDAO dao = new TurnoDAO();
+		List<Turno> turnos = dao.findTurnos();
+		
+		if(!turnos.isEmpty()){
+			System.out.println("### Lista de Turnos: ###");
+			turnos.stream().forEach((turno) -> {
+				System.out.println("#"+turno.getId()+" - "+turno.getDescricao());
+			});
+		}else{
+			System.out.println("Nenhum turno encontrado.");
+			System.out.println("Selecione opção 0 - Sem Turno.");
+		}
+		
+	}
+	
+	private boolean validadorFormatoHora(String hora){
+		if(hora.length() == 8){	
+			String regex = "\\d\\d\\:\\d\\d\\:\\d\\d";
+			if(!hora.matches(regex)){
+				return false;
+			}else{
+				return validadorHora(hora);
+			}
+		}else{
+			return false;
+		}
+	}
+	
+	
 private boolean validadorHora(String hora){
 		
-		hora = hora.replace(':', '*');
-		String sub = "";
-		int indexOfMarcoSegundo = 5;
-		int indexOfMarcoMinuto = 2;
 		int indexOfInicioMinuto = 3;
 		int indexOfInicioHora = 0;
 		int indexOfInicioSegundo = 6;
 		
 		if(hora.length() == 8){	
-			int primeiroDigitoMinuto = Integer.parseInt(hora, indexOfInicioMinuto);
-			int segundoDigitoMinuto = Integer.parseInt(hora, indexOfInicioMinuto+1);
-			int primeiroDigitoHora = Integer.parseInt(hora, indexOfInicioHora);
-			int segundoDigitoHora = Integer.parseInt(hora, indexOfInicioHora+1);
-			int primeiroDigitoSegundo = Integer.parseInt(hora, indexOfInicioSegundo);
-			int segundoDigitoSegundo = Integer.parseInt(hora, indexOfInicioSegundo+1);
+			int primeiroDigitoMinuto = Character.getNumericValue(hora.charAt(indexOfInicioMinuto));
+			int segundoDigitoMinuto = Character.getNumericValue(hora.charAt(indexOfInicioMinuto+1));
+			int primeiroDigitoHora = Character.getNumericValue(hora.charAt(indexOfInicioHora));
+			int segundoDigitoHora = Character.getNumericValue(hora.charAt(indexOfInicioHora+1));
+			int primeiroDigitoSegundo = Character.getNumericValue(hora.charAt(indexOfInicioSegundo));
+			int segundoDigitoSegundo = Character.getNumericValue(hora.charAt(indexOfInicioSegundo+1));
 			
-			for (int i = hora.length() - 1 ; i <= 0 ; i--){
-				sub = hora.substring(i-1, i);
-				if(sub.equals(":")){
-					return false;
-				}
-				if((sub.equals("*") && i != indexOfMarcoMinuto) || (sub.equals("*") && i != indexOfMarcoSegundo)){
-					return false;
-				}
-				if(!isNumeric(sub)){
-					return false;
-				}
-				if((i == indexOfInicioHora && primeiroDigitoHora > 2) || (i == indexOfInicioHora && primeiroDigitoHora == 2 && segundoDigitoHora > 3)
-						|| (i == indexOfInicioMinuto && primeiroDigitoMinuto > 6) || (i == primeiroDigitoMinuto && primeiroDigitoMinuto == 6 && segundoDigitoMinuto > 0)
-						|| (i == indexOfInicioSegundo && primeiroDigitoSegundo > 6) || (i == indexOfInicioSegundo && primeiroDigitoSegundo == 6 && segundoDigitoSegundo > 0)){
-					return false;
-				}
+			if(primeiroDigitoMinuto < 0 || segundoDigitoMinuto < 0 || primeiroDigitoHora < 0 || segundoDigitoHora < 0 || primeiroDigitoSegundo < 0 || segundoDigitoSegundo < 0)
+				return false;
+			
+			if( primeiroDigitoHora > 2 || (primeiroDigitoHora == 2 && segundoDigitoHora > 3)
+					|| primeiroDigitoMinuto > 5 || primeiroDigitoSegundo > 5){
+				return false;
 			}
+			
 		}else{
 			return false;
 		}
 		return true;
 	}
-	
-	
-	
 	
 	
 	private boolean validadorData(String data){

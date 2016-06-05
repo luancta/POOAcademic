@@ -1,5 +1,7 @@
 package cas.comum.dominio;
 
+import cas.util.util.Validator;
+
 public class Turno {
 	
 	private int id;
@@ -19,6 +21,9 @@ public class Turno {
 		this.descricao = descricao;
 	}
 	
-	
+	public boolean validate(){
+		Validator val =  new Validator();
+		return val.validarTurno(this);
+	}
 
 }
